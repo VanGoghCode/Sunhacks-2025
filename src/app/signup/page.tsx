@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, Copy, Check } from "lucide-react";
 
 export default function SignupPage() {
   const [error, setError] = useState("");
+  const [copiedItem, setCopiedItem] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +33,12 @@ export default function SignupPage() {
 
     // For now, just redirect to home
     window.location.href = "/";
+  };
+
+  const handleCopy = async (text: string, itemId: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedItem(itemId);
+    setTimeout(() => setCopiedItem(""), 2000); // Reset after 2 seconds
   };
 
   return (
@@ -180,6 +187,77 @@ export default function SignupPage() {
               Create Account
             </Button>
           </form>
+
+          {/* Demo Credentials */}
+          <div className="mt-6 p-4 bg-red-50/80 backdrop-blur-sm rounded-xl border border-red-200/50">
+            <h3 className="text-sm font-semibold text-red-700 mb-3">CREDENTIALS:</h3>
+            <div className="space-y-2 text-xs text-red-600">
+              <div className="flex items-center justify-between">
+                <span><strong>Admin:</strong> test@loopit.org</span>
+                <button 
+                  onClick={() => handleCopy('test@loopit.org', 'admin')}
+                  className={`p-1 hover:bg-red-100 rounded transition-all duration-200 transform ${
+                    copiedItem === 'admin' ? 'scale-110 bg-green-100' : ''
+                  }`}
+                  title={copiedItem === 'admin' ? 'Copied!' : 'Copy email'}
+                >
+                  {copiedItem === 'admin' ? (
+                    <Check className="w-3 h-3 text-green-600" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center justify-between">
+                <span><strong>Organization:</strong> test@amazon.com</span>
+                <button 
+                  onClick={() => handleCopy('test@amazon.com', 'org')}
+                  className={`p-1 hover:bg-red-100 rounded transition-all duration-200 transform ${
+                    copiedItem === 'org' ? 'scale-110 bg-green-100' : ''
+                  }`}
+                  title={copiedItem === 'org' ? 'Copied!' : 'Copy email'}
+                >
+                  {copiedItem === 'org' ? (
+                    <Check className="w-3 h-3 text-green-600" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center justify-between">
+                <span><strong>Marketplace:</strong> test@gmail.com</span>
+                <button 
+                  onClick={() => handleCopy('test@gmail.com', 'marketplace')}
+                  className={`p-1 hover:bg-red-100 rounded transition-all duration-200 transform ${
+                    copiedItem === 'marketplace' ? 'scale-110 bg-green-100' : ''
+                  }`}
+                  title={copiedItem === 'marketplace' ? 'Copied!' : 'Copy email'}
+                >
+                  {copiedItem === 'marketplace' ? (
+                    <Check className="w-3 h-3 text-green-600" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center justify-between pt-1 border-t border-red-200">
+                <span><strong>Common password:</strong> Test@1234</span>
+                <button 
+                  onClick={() => handleCopy('Test@1234', 'password')}
+                  className={`p-1 hover:bg-red-100 rounded transition-all duration-200 transform ${
+                    copiedItem === 'password' ? 'scale-110 bg-green-100' : ''
+                  }`}
+                  title={copiedItem === 'password' ? 'Copied!' : 'Copy password'}
+                >
+                  {copiedItem === 'password' ? (
+                    <Check className="w-3 h-3 text-green-600" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
 
           {/* Footer */}
           <div className="mt-8 text-center">
