@@ -4,18 +4,18 @@ import { Button } from '../../components/ui/Button';
 const ContactPage = () => {
   const contactMethods = [
     {
-      icon: '📧',
-      title: 'Email Us',
-      description: 'Send us a message and we\'ll respond within 24 hours.',
-      contact: 'hello@loopit.com',
-      action: 'Send Email',
+      icon: '�',
+      title: 'WhatsApp Support',
+      description: 'Humans answer in 30 minutes. No bots, just real help.',
+      contact: '+91 98765 43210',
+      action: 'Start Chat',
     },
     {
-      icon: '📞',
-      title: 'Call Us',
-      description: 'Speak directly with our support team.',
-      contact: '+1 (555) 123-4567',
-      action: 'Call Now',
+      icon: '�',
+      title: 'Email Us',
+      description: 'For detailed inquiries about donations or partnerships.',
+      contact: 'hello@loopit.org',
+      action: 'Send Email',
     },
     {
       icon: '💬',

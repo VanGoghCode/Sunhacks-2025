@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['Red Hat Display', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         nature: {
           50: '#f0fdf4',

@@ -18,10 +18,22 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('#')) {
+      const targetId = href.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Marketplace', href: '/marketplace' },
-    { label: 'About Us', href: '/about' },
+    { label: 'What we do', href: '#what-we-do' },
+    { label: 'Impact', href: '#impact' },
+    { label: 'NGOs', href: '#ngos' },
+    { label: 'Reviews', href: '#reviews' },
     { label: 'Contact', href: '/contact' },
   ];
 
@@ -56,21 +68,35 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/50 relative group"
-              >
-                {item.label}
-                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-green-500 to-forest-500 transition-all duration-300 group-hover:w-3/4 transform -translate-x-1/2 rounded-full"></span>
-              </Link>
+              item.href.startsWith('#') ? (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.href)}
+                  className="px-4 py-2 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/50 relative group"
+                >
+                  {item.label}
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-green-500 to-forest-500 transition-all duration-300 group-hover:w-3/4 transform -translate-x-1/2 rounded-full"></span>
+                </button>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="px-4 py-2 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/50 relative group"
+                >
+                  {item.label}
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-green-500 to-forest-500 transition-all duration-300 group-hover:w-3/4 transform -translate-x-1/2 rounded-full"></span>
+                </Link>
+              )
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Button variant="outline" size="sm">
+              Login
+            </Button>
             <Button variant="primary" size="sm">
-              Get Started
+              Sign-up
             </Button>
           </div>
 
@@ -111,18 +137,31 @@ const Navbar = () => {
       >
         <div className="bg-white/95 backdrop-blur-md border-t border-green-200/50 px-4 py-6 space-y-4">
           {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
+            item.href.startsWith('#') ? (
+              <button
+                key={item.label}
+                onClick={() => handleNavClick(item.href)}
+                className="block w-full text-left px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
-          <div className="pt-4">
+          <div className="pt-4 space-y-3">
+            <Button variant="outline" size="sm" className="w-full">
+              Login
+            </Button>
             <Button variant="primary" size="sm" className="w-full">
-              Get Started
+              Sign-up
             </Button>
           </div>
         </div>

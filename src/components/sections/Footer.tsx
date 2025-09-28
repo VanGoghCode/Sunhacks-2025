@@ -7,28 +7,28 @@ import { Button } from '../ui/Button';
 const Footer = () => {
   const footerLinks = {
     company: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Our Team', href: '/about#team' },
+      { label: 'What we do', href: '/what-we-do' },
+      { label: 'Impact', href: '/impact' },
+      { label: 'Our Story', href: '/about' },
       { label: 'Careers', href: '/careers' },
-      { label: 'Press', href: '/press' },
     ],
-    products: [
-      { label: 'Marketplace', href: '/marketplace' },
-      { label: 'Eco Products', href: '/marketplace?category=eco' },
-      { label: 'Technology', href: '/marketplace?category=tech' },
-      { label: 'Lifestyle', href: '/marketplace?category=lifestyle' },
+    services: [
+      { label: 'Donate Laptops', href: '/donate' },
+      { label: 'Request Laptops', href: '/request' },
+      { label: 'Data Wiping', href: '/data-security' },
+      { label: 'ESG Reports', href: '/esg-reports' },
     ],
     support: [
       { label: 'Contact Us', href: '/contact' },
       { label: 'Help Center', href: '/help' },
-      { label: 'Shipping', href: '/shipping' },
-      { label: 'Returns', href: '/returns' },
+      { label: 'Pickup Schedule', href: '/pickup' },
+      { label: 'Track Impact', href: '/track' },
     ],
     legal: [
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
-      { label: 'Sustainability', href: '/sustainability' },
+      { label: 'Data Security', href: '/data-security' },
+      { label: 'Compliance', href: '/compliance' },
     ],
   };
 
@@ -56,11 +56,11 @@ const Footer = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center">
               <h3 className="text-2xl sm:text-3xl font-bold mb-4">
-                Stay Updated with Sustainable Living Tips
+                Stay Connected
               </h3>
               <p className="text-green-200 mb-8 max-w-2xl mx-auto">
-                Join our newsletter and get the latest eco-friendly products, sustainability tips, 
-                and exclusive offers delivered to your inbox.
+                Get monthly impact reports, new NGO partnerships, and stories from the classrooms 
+                your laptops are helping to transform.
               </p>
               
               <div className="max-w-md mx-auto flex gap-3">
@@ -90,13 +90,13 @@ const Footer = () => {
               </Link>
               
               <p className="text-green-200 mb-6 leading-relaxed">
-                Creating a sustainable future through innovative technology and 
-                community-driven solutions. Join us in making a positive impact 
-                on our planet.
+                Closing the loop on e-waste by connecting corporate laptop donations 
+                with schools and NGOs. Government-certified data security, full impact 
+                transparency, and zero cost to do good.
               </p>
 
               {/* Social Links */}
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 mb-6">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
@@ -107,6 +107,24 @@ const Footer = () => {
                     <span className="text-lg">{social.icon}</span>
                   </a>
                 ))}
+              </div>
+
+              {/* WhatsApp Support */}
+              <div className="bg-green-600/20 backdrop-blur-sm border border-green-400/30 rounded-2xl p-4">
+                <div className="flex items-center space-x-3 mb-2">
+                  <span className="text-2xl">💬</span>
+                  <span className="font-semibold text-green-100">24/7 WhatsApp Support</span>
+                </div>
+                <p className="text-green-200 text-sm mb-3">
+                  Humans answer in 30 minutes. No bots, just real help.
+                </p>
+                <a
+                  href="https://wa.me/1234567890"
+                  className="inline-flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium"
+                >
+                  <span>💬</span>
+                  <span>Start Chat</span>
+                </a>
               </div>
             </div>
 
@@ -127,11 +145,11 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Products Links */}
+            {/* Services Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-6">Products</h4>
+              <h4 className="text-lg font-semibold mb-6">Services</h4>
               <ul className="space-y-3">
-                {footerLinks.products.map((link) => (
+                {footerLinks.services.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -185,17 +203,17 @@ const Footer = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-green-300 text-sm">
-                © 2025 Loop It. All rights reserved. Building a sustainable future, one loop at a time.
+                © 2025 Loopit. All rights reserved. Closing the loop on e-waste, one laptop at a time.
               </p>
               
               <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2 text-green-300 text-sm">
-                  <span className="text-green-400">🌱</span>
-                  <span>Carbon Neutral Shipping</span>
+                  <span className="text-green-400">🔒</span>
+                  <span>Government Certified Data Wiping</span>
                 </div>
                 <div className="flex items-center space-x-2 text-green-300 text-sm">
-                  <span className="text-blue-400">♻️</span>
-                  <span>100% Recyclable Packaging</span>
+                  <span className="text-blue-400">📊</span>
+                  <span>Full ESG Compliance</span>
                 </div>
               </div>
             </div>

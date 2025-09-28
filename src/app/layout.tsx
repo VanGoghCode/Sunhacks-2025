@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Red_Hat_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 
-const inter = Inter({ 
+const redHatDisplay = Red_Hat_Display({ 
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Loop It - Sustainable Innovation Platform",
-  description: "Discover the natural flow of innovation. Where sustainability meets technology in perfect harmony.",
+  title: "Loopit - Close the Loop on E-Waste",
+  description: "Give us your used laptops, we will wipe them to government-certified nothing, then hand them to schools & NGOs. Zero data, zero doubt, zero cost to do good.",
 };
 
 export default function RootLayout({
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased animated-gradient-bg min-h-screen`}>
+      <body className={`${redHatDisplay.className} antialiased animated-gradient-bg min-h-screen`}>
         <div className="glass-overlay min-h-screen">
           <Navbar />
           {children}
