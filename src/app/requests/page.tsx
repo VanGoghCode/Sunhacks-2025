@@ -10,7 +10,7 @@ import { Download, Package, FileCheck, Truck, CheckCircle } from "lucide-react";
 
 export default function RequestsPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [requests, setRequests] = useState<Request[]>([
+  const requests: Request[] = [
     {
       id: "1",
       devices: [
@@ -39,7 +39,7 @@ export default function RequestsPage() {
       shippingDate: "2025-09-27",
       waybillNumber: "WB123456789",
     },
-  ]);
+  ];
 
   useEffect(() => {
     setUser(getUserSession());

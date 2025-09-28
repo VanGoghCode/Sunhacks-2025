@@ -3,77 +3,6 @@
 import { useEffect, useState } from "react";
 import { getUserSession, User } from "@/lib/auth";
 import { Button } from "@/components/ui/Button";
-const inventoryStatus = {
-  total: 1700,
-  available: 600,
-  sanitized: 500,
-  sold: 600,
-  inProcess: 100,
-};
-
-const inventoryByLocation = [
-  {
-    name: "Main Warehouse",
-    available: 450,
-    sanitized: 380,
-    sold: 520,
-    inProcess: 75,
-  },
-  {
-    name: "East Facility",
-    available: 220,
-    sanitized: 185,
-    sold: 245,
-    inProcess: 25,
-  },
-  {
-    name: "West Facility",
-    available: 180,
-    sanitized: 160,
-    sold: 160,
-    inProcess: 25,
-  },
-];
-
-const inventoryTrends = [
-  { month: "Jan", incoming: 220, processed: 185, sold: 165 },
-  { month: "Feb", incoming: 245, processed: 225, sold: 195 },
-  { month: "Mar", incoming: 280, processed: 265, sold: 235 },
-  { month: "Apr", incoming: 310, processed: 290, sold: 270 },
-  { month: "May", incoming: 345, processed: 320, sold: 295 },
-  { month: "Jun", incoming: 380, processed: 350, sold: 330 },
-];
-
-const deviceInventory = [
-  {
-    category: "Laptops",
-    total: 1200,
-    available: 400,
-    sanitized: 350,
-    sold: 450,
-  },
-  {
-    category: "Smartphones",
-    total: 800,
-    available: 250,
-    sanitized: 225,
-    sold: 325,
-  },
-  { category: "Tablets", total: 300, available: 125, sanitized: 100, sold: 75 },
-  { category: "Desktops", total: 200, available: 75, sanitized: 50, sold: 75 },
-];
-
-const COLORS = {
-  primary: "#0088FE",
-  secondary: "#00C49F",
-  accent: "#FFBB28",
-  warning: "#FF8042",
-  info: "#8884d8",
-  success: "#82ca9d",
-  error: "#ff7878",
-  purple: "#9988FF",
-  teal: "#4FD1C5",
-};
 import ProtectedRoute from "@/components/ProtectedRoute";
 import DashboardNavbar from "@/components/DashboardNavbar";
 import {
@@ -83,12 +12,10 @@ import {
   Shield,
   Recycle,
   TrendingUp,
-  Calendar,
   Laptop,
   Globe,
   Award,
   Package,
-  CheckCircle,
   AlertCircle,
   ShoppingCart,
   HardDrive,
@@ -115,8 +42,24 @@ import {
   PolarRadiusAxis,
   Radar,
   ComposedChart,
-  Scatter,
 } from "recharts";
+
+// Interfaces
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    color: string;
+    payload: {
+      name: string;
+      impact?: string;
+      beneficiaries?: number;
+      totalDevices?: number;
+    };
+  }>;
+  label?: string;
+}
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -323,12 +266,12 @@ export default function Dashboard() {
     return new Intl.NumberFormat("en-US").format(num);
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-200">
           <p className="text-sm font-semibold text-gray-800">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}:{" "}
               {entry.name.includes("Energy")
@@ -528,13 +471,7 @@ export default function Dashboard() {
                         />
                       ))}
                     </Pie>
-                    <Tooltip
-                      content={<CustomTooltip />}
-                      formatter={(value: any, name: any, props: any) => [
-                        `${value} (${props.payload.impact})`,
-                        `${props.payload.name} - ${props.payload.beneficiaries} beneficiaries`,
-                      ]}
-                    />
+                    <Tooltip content={<CustomTooltip />} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -556,13 +493,7 @@ export default function Dashboard() {
                     />
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip
-                      content={<CustomTooltip />}
-                      formatter={(value: any, name: any, props: any) => [
-                        `${value}% (${props.payload.totalDevices} devices)`,
-                        props.payload.name,
-                      ]}
-                    />
+                    <Tooltip content={<CustomTooltip />} />
                     <Bar
                       dataKey="value"
                       fill={COLORS.info}

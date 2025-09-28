@@ -4,8 +4,6 @@ import {
   Grid2x2,
   LayoutList,
   SlidersHorizontal,
-  ArrowDownAZ,
-  Star,
 } from "lucide-react";
 
 interface ViewOptionsProps {

@@ -14,7 +14,6 @@ import {
   ShoppingCart,
   Star,
   MapPin,
-  Tag,
   Info,
   ChevronRight,
 } from "lucide-react";

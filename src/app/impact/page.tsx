@@ -10,12 +10,12 @@ import { Download, Users, LeafyGreen, DollarSign } from "lucide-react";
 
 export default function ImpactPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [impact, setImpact] = useState<Impact>({
+  const impact: Impact = {
     co2Avoided: 2500, // kg
     moneySaved: 15000, // €
     pupilsImpacted: 250,
     certificateUrl: "/certificates/impact-2025.pdf",
-  });
+  };
 
   useEffect(() => {
     setUser(getUserSession());
