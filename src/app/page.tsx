@@ -6,6 +6,7 @@ import SocialProofSection from '../components/sections/SocialProofSection';
 import WhatWeDoSection from '../components/sections/WhatWeDoSection';
 import HowItWorksSection from '../components/sections/HowItWorksSection';
 import ImpactCounterSection from '../components/sections/ImpactCounterSection';
+import CO2CalculatorSection from '../components/sections/CO2CalculatorSection';
 import WhoYouCanHelpSection from '../components/sections/WhoYouCanHelpSection';
 import WallOfLoveSection from '../components/sections/WallOfLoveSection';
 import ConnectedNGOsSection from '../components/sections/ConnectedNGOsSection';
@@ -32,6 +33,7 @@ export default function Home() {
       <WhatWeDoSection />
       <HowItWorksSection />
       <ImpactCounterSection />
+      <CO2CalculatorSection />
       <WhoYouCanHelpSection />
       <WallOfLoveSection />
       <ConnectedNGOsSection />

@@ -76,7 +76,7 @@ export default function MarketplacePage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search for laptops, desktops, tablets..."
+                placeholder="Search for laptops, desktops, monitors..."
                 className="w-full pl-10 pr-4 py-3 bg-white/80 backdrop-blur-sm border border-blue-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -141,7 +141,7 @@ export default function MarketplacePage() {
                 🖥️ Desktops
               </Button>
               <Button variant="outline" className="justify-start">
-                📱 Tablets
+                �️ Monitors
               </Button>
               <Button variant="outline" className="justify-start">
                 🖱️ Accessories

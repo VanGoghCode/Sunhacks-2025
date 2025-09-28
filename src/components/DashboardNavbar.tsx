@@ -22,11 +22,11 @@ export default function DashboardNavbar({ title, userName, userEmail }: Dashboar
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-green-200/50 sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
             <Image
-              src="/images/Loop_it_1.png"
+              src="/images/Loop_it.png"
               alt="Loop It"
               width={120}
               height={40}

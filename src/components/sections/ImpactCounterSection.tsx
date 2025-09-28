@@ -59,7 +59,7 @@ const ImpactCounterSection = () => {
     },
     {
       icon: '🌍',
-      number: `${counters.co2}t`,
+      number: `${counters.co2} kg`,
       label: 'CO₂ Emissions Avoided',
       color: 'from-green-500 to-green-600', 
       description: 'Equal to planting 7,100+ trees'

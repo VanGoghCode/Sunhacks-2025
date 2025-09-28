@@ -38,7 +38,7 @@ const WallOfLoveSection = () => {
     },
     {
       id: 4,
-      text: "Professional service from pickup to delivery. The CO₂ certificate showed we avoided 5.2 tonnes of emissions. Perfect for our annual sustainability report.",
+      text: "Professional service from pickup to delivery. The CO₂ certificate showed we avoided 5,200 kg of emissions. Perfect for our annual sustainability report.",
       author: "David Park",
       role: "Operations Manager, EcoStart",
       company: "EcoStart",

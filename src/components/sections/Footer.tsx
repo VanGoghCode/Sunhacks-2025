@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '../ui/Button';
 
 const Footer = () => {
@@ -82,11 +83,14 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {/* Brand Section */}
             <div className="lg:col-span-2">
-              <Link href="/" className="flex items-center space-x-2 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-forest-500 rounded-xl flex items-center justify-center">
-                  <div className="w-5 h-5 bg-white rounded-full opacity-90"></div>
-                </div>
-                <span className="text-2xl font-bold">Loop It</span>
+              <Link href="/" className="flex items-center space-x-2 mb-6 group">
+                <Image
+                  src="/images/Loop_it.png"
+                  alt="Loop It"
+                  width={160}
+                  height={53}
+                  className="h-6 w-auto transform group-hover:scale-105 transition-transform duration-300"
+                />
               </Link>
               
               <p className="text-green-200 mb-6 leading-relaxed">
