@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/Button";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,9 +24,17 @@ const Navbar = () => {
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
       const targetId = href.substring(1);
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Check if we're on the home page
+      if (pathname === '/') {
+        // We're on home page, scroll to the element
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // We're on a different page, navigate to home with hash
+        router.push(`/${href}`);
       }
     }
     setIsMobileMenuOpen(false);
@@ -33,6 +44,7 @@ const Navbar = () => {
     { label: 'What we do', href: '#what-we-do' },
     { label: 'Impact', href: '#impact' },
     { label: 'NGOs', href: '#ngos' },
+    { label: 'Our story', href: '/about' },
     { label: 'Reviews', href: '#reviews' },
     { label: 'Contact', href: '/contact' },
   ];

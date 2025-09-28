@@ -89,29 +89,14 @@ const AboutPage = () => {
           </h2>
           <div className="space-y-8 text-green-800 text-lg leading-relaxed text-justify">
             <p>
-              At LoopIT, we believe every device has a second life waiting to
-              happen. Millions of electronics sit unused each year, often
-              discarded because of data security fears. We empower organizations
-              to securely wipe, certify, and donate their{" "}
-              <span className="font-semibold">eco-ready tech</span>, giving
-              devices a purposeful, sustainable future while reducing e-waste
-              and environmental impact.
+              Every year, <em>millions</em> of laptops and desktops are discarded, not because they are broken, but because organizations fear the risks of <strong>sensitive data leaking</strong>. The result is a cycle of waste: perfectly usable devices are shredded or landfilled, while the environmental cost of manufacturing new hardware keeps rising. At the same time, schools and nonprofits struggle to equip classrooms and communities with reliable technology.
             </p>
             <p>
-              Too often, functioning devices end up in drawers or landfills
-              simply because organizations don’t have a trusted, verifiable way
-              to handle sensitive data. LoopIT bridges this gap with secure
-              wipes, tamper-evident certificates, and an easy donation flow
-              turning idle technology into real-world impact for schools,
-              nonprofits, and communities while keeping carbon emissions in
-              check.
+              At LoopIT, we set out to change this <strong>broken system</strong> by bridging the gap between <em>data security</em> and <em>sustainability</em>. Our platform empowers organizations to securely wipe devices using{" "}
+              <span className="font-semibold">NIST-compliant workflows</span>, generate <strong>tamper-evident certificates</strong> that prove compliance, and quantify the <strong>CO₂ emissions avoided</strong> through reuse instead of disposal. By pairing compliance with measurable impact, we give IT teams confidence while helping ESG leaders meet their sustainability goals.
             </p>
             <p>
-              We’re not just about technology, we’re about creating a{" "}
-              <span className="font-semibold">circular ecosystem</span> where
-              devices, people, and the planet all benefit. Our mission is to
-              transform how organizations think about e-waste, turning what was
-              once “discarded” into meaningful action and opportunity.
+              But our story doesn&apos;t end with security and reporting — it extends into the <em>community</em>. Once devices are certified clean, LoopIT connects them directly to schools and NGOs that need them most. What was once <strong>e-waste</strong> becomes a tool for education, growth, and opportunity. We believe technology should live beyond the office, fueling brighter futures while reducing our collective environmental footprint.
             </p>
           </div>
         </div>
