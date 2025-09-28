@@ -6,6 +6,7 @@ const ConnectedNGOsSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedState, setSelectedState] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
 
   const ngoLogos = [
     { name: 'Hope Foundation', logo: '🏫', state: 'Maharashtra' },
@@ -79,16 +80,16 @@ const ConnectedNGOsSection = () => {
     ],
   };
 
-  // Auto-rotate carousel (horizontal, showing 5 logos at a time)
+  // Auto-rotate carousel (showing 6 NGOs at a time, moving one by one)
   useEffect(() => {
+    if (connectedNGOs.length <= 6 || isCarouselPaused) return;
+    
     const timer = setInterval(() => {
-      setCurrentCarouselIndex((prevIndex) => 
-        (prevIndex + 1) % Math.ceil(connectedNGOs.length / 5)
-      );
-    }, 3000); // Change every 3 seconds
+      setCurrentCarouselIndex((prevIndex) => (prevIndex + 1) % connectedNGOs.length);
+    }, 3000);
 
     return () => clearInterval(timer);
-  }, [connectedNGOs.length]);
+  }, [connectedNGOs.length, isCarouselPaused]);
 
   const openModal = (state?: string) => {
     setSelectedState(state || null);
@@ -98,6 +99,13 @@ const ConnectedNGOsSection = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedState(null);
+  };
+
+  const handleManualNavigation = (newIndex: number) => {
+    setCurrentCarouselIndex(newIndex);
+    setIsCarouselPaused(true);
+    // Resume auto-rotation after 3 seconds
+    setTimeout(() => setIsCarouselPaused(false), 3000);
   };
 
   return (
@@ -114,76 +122,107 @@ const ConnectedNGOsSection = () => {
           </p>
           
           {/* Horizontal NGO Logo Carousel */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 mb-8">
-            <h3 className="text-lg font-semibold text-green-800 mb-6">Connected Organizations:</h3>
+          <div 
+            className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 mb-8"
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-semibold text-green-800">Connected Organizations:</h3>
+                {connectedNGOs.length > 6 && (
+                  <p className="text-xs text-green-600 mt-1">
+                    Showing 6 of {connectedNGOs.length} • Position {(currentCarouselIndex % connectedNGOs.length) + 1}
+                  </p>
+                )}
+              </div>
+              {connectedNGOs.length > 6 && (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => {
+                      const newIndex = (currentCarouselIndex - 1 + connectedNGOs.length) % connectedNGOs.length;
+                      handleManualNavigation(newIndex);
+                    }}
+                    className="p-2 bg-green-100 hover:bg-green-200 rounded-lg transition-colors duration-200"
+                  >
+                    <span className="text-green-600">‹</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const newIndex = (currentCarouselIndex + 1) % connectedNGOs.length;
+                      handleManualNavigation(newIndex);
+                    }}
+                    className="p-2 bg-green-100 hover:bg-green-200 rounded-lg transition-colors duration-200"
+                  >
+                    <span className="text-green-600">›</span>
+                  </button>
+                </div>
+              )}
+            </div>
             <div className="overflow-hidden">
               <div 
-                className="flex transition-transform duration-1000 ease-in-out"
+                className="flex transition-transform duration-500 ease-in-out"
                 style={{
-                  transform: `translateX(-${currentCarouselIndex * (100 / Math.ceil(connectedNGOs.length / 5))}%)`,
-                  width: `${Math.ceil(connectedNGOs.length / 5) * 100}%`,
+                  transform: `translateX(-${currentCarouselIndex * (100 / 6)}%)`,
                 }}
               >
-                {Array.from({ length: Math.ceil(connectedNGOs.length / 5) }).map((_, slideIndex) => (
+                {/* Create extended array for seamless looping */}
+                {[...connectedNGOs, ...connectedNGOs.slice(0, 6)].map((ngo, index) => (
                   <div 
-                    key={slideIndex}
-                    className="flex justify-center items-center space-x-6 w-full flex-shrink-0"
+                    key={`${ngo.name}-${index}`}
+                    className="flex flex-col items-center text-center flex-shrink-0 px-2"
+                    style={{ width: `${100 / 6}%` }}
                   >
-                    {connectedNGOs.slice(slideIndex * 5, (slideIndex + 1) * 5).map((ngo, index) => (
-                      <div 
-                        key={index}
-                        className="flex flex-col items-center text-center min-w-0"
-                      >
-                        {/* NGO Logo */}
-                        <div className="w-16 h-16 mb-3 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden group hover:shadow-lg transition-all duration-300">
-                          <img 
-                            src={`/ngos/${ngo.logo}`} 
-                            alt={ngo.name}
-                            className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
-                            onLoad={(e) => {
-                              console.log(`✅ Image loaded successfully: ${ngo.logo}`);
-                            }}
-                            onError={(e) => {
-                              console.log(`❌ Image failed to load: ${ngo.logo}`);
-                              // Fallback to initials placeholder if image fails to load
-                              const target = e.target as HTMLImageElement;
-                              const parent = target.parentElement;
-                              if (parent) {
-                                parent.innerHTML = `
-                                  <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-forest-500 rounded-lg flex items-center justify-center">
-                                    <span class="text-white font-bold text-sm">
-                                      ${ngo.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
-                                    </span>
-                                  </div>
-                                `;
-                              }
-                            }}
-                          />
-                        </div>
-                        {/* NGO Name */}
-                        <p className="text-xs font-medium text-green-700 text-center leading-tight max-w-20">
-                          {ngo.name}
-                        </p>
-                      </div>
-                    ))}
+                    {/* NGO Logo */}
+                    <div className="w-14 h-14 mb-3 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden group hover:shadow-lg transition-all duration-300 mx-auto">
+                      <img 
+                        src={`/ngos/${ngo.logo}`} 
+                        alt={ngo.name}
+                        className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                        onLoad={(e) => {
+                          console.log(`✅ Image loaded successfully: ${ngo.logo}`);
+                        }}
+                        onError={(e) => {
+                          console.log(`❌ Image failed to load: ${ngo.logo}`);
+                          // Fallback to initials placeholder if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `
+                              <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-forest-500 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">
+                                  ${ngo.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                                </span>
+                              </div>
+                            `;
+                          }
+                        }}
+                      />
+                    </div>
+                    {/* NGO Name */}
+                    <p className="text-xs font-medium text-green-700 text-center leading-tight px-1">
+                      {ngo.name.length > 18 ? ngo.name.substring(0, 15) + '...' : ngo.name}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Carousel Dots */}
-            <div className="flex justify-center mt-6 space-x-2">
-              {Array.from({ length: Math.ceil(connectedNGOs.length / 5) }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentCarouselIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentCarouselIndex 
-                      ? 'bg-green-600 w-8' 
-                      : 'bg-green-300 hover:bg-green-400'
-                  }`}
-                />
-              ))}
-            </div>
+            {/* Carousel Dots - Only show if there are more than 6 NGOs */}
+            {connectedNGOs.length > 6 && (
+              <div className="flex justify-center mt-6 space-x-1">
+                {connectedNGOs.slice(0, Math.min(connectedNGOs.length, 10)).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleManualNavigation(index)}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      index === (currentCarouselIndex % connectedNGOs.length) 
+                        ? 'bg-green-600 w-6' 
+                        : 'bg-green-300 hover:bg-green-400'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

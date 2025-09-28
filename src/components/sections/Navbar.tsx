@@ -101,9 +101,6 @@ const Navbar = () => {
             >
               Sign Up
             </Link>
-            <Button variant="primary" size="sm">
-              Sign-up
-            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -181,9 +178,6 @@ const Navbar = () => {
             >
               Sign Up
             </Link>
-            <Button variant="primary" size="sm" className="w-full">
-              Sign-up
-            </Button>
           </div>
         </div>
       </div>
