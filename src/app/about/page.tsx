@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Button } from "../../components/ui/Button";
 
 const AboutPage = () => {
@@ -155,9 +156,11 @@ const AboutPage = () => {
               >
                 <div className="relative mb-6">
                   <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-green-200 shadow-lg">
-                    <img
+                    <Image
                       src={member.image}
                       alt={`${member.name} - ${member.role}`}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover"
                     />
                   </div>
