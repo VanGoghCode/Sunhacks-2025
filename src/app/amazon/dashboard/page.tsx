@@ -5,6 +5,7 @@ import { getUserSession, User } from '@/lib/auth';
 import { Button } from '@/components/ui/Button';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AmazonDashboardNavbar from '@/components/AmazonDashboardNavbar';
+import Image from 'next/image';
 import { 
   Package, 
   Recycle, 
@@ -27,7 +28,8 @@ import {
   Share2,
   Calculator,
   Info,
-  X
+  X,
+  Upload
 } from 'lucide-react';
 
 interface Device {
@@ -84,6 +86,8 @@ export default function AmazonDashboard() {
   const [selectedOS, setSelectedOS] = useState('');
   const [selectedDriveType, setSelectedDriveType] = useState('');
   const [showCO2Calculator, setShowCO2Calculator] = useState(false);
+  const [showFileUpload, setShowFileUpload] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     setUser(getUserSession());
@@ -124,6 +128,25 @@ export default function AmazonDashboard() {
 
   const handleGenerateLabel = (device: Device) => {
     alert(`🏷️ QR Code Label Generated!\n\nDevice: ${device.model}\nSerial: ${device.serialNumber}\nBatch: ${device.batch}\n\nLabel includes:\n✓ Secure wipe instructions\n✓ Loop It pickup QR code\n✓ Amazon asset tracking ID\n\n[Label sent to default printer]`);
+  };
+
+  const handleFileUpload = () => {
+    setShowFileUpload(true);
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
+  };
+
+  const handleFileSubmit = () => {
+    if (selectedFile) {
+      alert(`✅ File uploaded successfully!\n\nFile: ${selectedFile.name}\nSize: ${(selectedFile.size / 1024).toFixed(1)} KB\nType: ${selectedFile.type || 'Unknown'}\n\n📋 File has been processed and added to your device documentation system.`);
+      setSelectedFile(null);
+      setShowFileUpload(false);
+    } else {
+      alert('⚠️ Please select a file to upload.');
+    }
   };
 
   const handleEditDevice = (device: Device) => {
@@ -1392,6 +1415,22 @@ exit 0`;
             <Plus className="w-4 h-4 mr-2" />
             Add Device
           </Button>
+          <Button
+            variant="primary"
+            onClick={handleFileUpload}
+            className="bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-300/50 px-0 py-0 ml-2"
+            title="Upload Log Files for AI verification"
+          >
+            <div className="flex items-center">
+              <Image 
+                src="/AI_logo.png" 
+                alt="AI Gemini Logo" 
+                width={20}
+                height={20}
+                className="w-5 h-5 object-contain"
+              />
+            </div>
+          </Button>
         </div>
       </div>
 
@@ -1887,6 +1926,59 @@ exit 0`;
                     Got it, thanks!
                   </Button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* File Upload Modal */}
+        {showFileUpload && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl border border-white/50">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Upload Device Files</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Upload log files, documentation, or any other device-related files. Supported formats: PDF, TXT, LOG, DOC, CSV, JSON, XML, ZIP and more.
+              </p>
+              
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select File
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf,.txt,.log,.doc,.docx,.csv,.xlsx,.json,.xml,.zip,.rar"
+                  onChange={handleFileSelect}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                />
+                {selectedFile && (
+                  <div className="mt-2 p-2 bg-orange-50 rounded-lg">
+                    <p className="text-sm text-orange-800">
+                      <strong>Selected:</strong> {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex space-x-3">
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowFileUpload(false);
+                    setSelectedFile(null);
+                  }}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  variant="primary" 
+                  onClick={handleFileSubmit}
+                  className="flex-1 bg-orange-600 hover:bg-orange-700"
+                  disabled={!selectedFile}
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload File
+                </Button>
               </div>
             </div>
           </div>
