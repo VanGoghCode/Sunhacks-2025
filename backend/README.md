@@ -96,17 +96,43 @@ Make sure the server is running on `http://localhost:8000` before running tests.
 
 ```
 backend/
-├── main.py          # FastAPI application with endpoints
-├── schemas.py       # Pydantic models for requests/responses
-├── gemini.py        # Gemini API integration
-├── test_api.py      # Test script for all endpoints
-├── requirements.txt # Python dependencies
-└── README.md        # This file
+├── main.py              # FastAPI application with endpoints
+├── schemas.py           # Pydantic models for requests/responses
+├── gemini.py            # Gemini API integration (using official SDK)
+├── test_api.py          # Test script for all endpoints
+├── start_server.sh      # Easy startup script
+├── setup_gemini_key.sh  # Helper script for API key setup
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
 ```
 
 ## Environment Variables
 
 - `GEMINI_API_KEY`: Required for the analyze-log endpoint. Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+### Setting up Gemini API Key
+
+1. **Get your API key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey) and create a new API key
+
+2. **Set the environment variable**:
+   ```bash
+   # Temporary (current session only)
+   export GEMINI_API_KEY="your_api_key_here"
+   
+   # Permanent (add to shell profile)
+   echo 'export GEMINI_API_KEY="your_api_key_here"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. **Use the setup script**:
+   ```bash
+   ./setup_gemini_key.sh
+   ```
+
+4. **Verify the key is set**:
+   ```bash
+   echo $GEMINI_API_KEY
+   ```
 
 ## Security Notes
 
