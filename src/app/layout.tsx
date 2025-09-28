@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Red_Hat_Display } from "next/font/google";
 import "./globals.css";
-import Navbar from '../components/sections/Navbar';
-import Footer from '../components/sections/Footer';
+import ConditionalLayout from '../components/ConditionalLayout';
 
 const redHatDisplay = Red_Hat_Display({ 
   subsets: ['latin'],
@@ -25,9 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${redHatDisplay.className} antialiased animated-gradient-bg min-h-screen`}>
         <div className="glass-overlay min-h-screen">
-          <Navbar />
-          {children}
-          <Footer />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </div>
       </body>
     </html>

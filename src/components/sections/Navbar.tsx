@@ -5,12 +5,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/Button";
+import { getUserSession, clearUserSession, User } from "@/lib/auth";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    setUser(getUserSession());
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +44,12 @@ const Navbar = () => {
       }
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    clearUserSession();
+    setUser(null);
+    router.push('/');
   };
 
   const navItems = [
@@ -101,18 +113,38 @@ const Navbar = () => {
 
           {/* Auth & CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link
-              href="/login"
-              className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
-            >
-              Sign Up
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href={user.dashboardRoute}
+                  className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
+                >
+                  Dashboard
+                </Link>
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  size="sm"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -176,20 +208,43 @@ const Navbar = () => {
             )
           ))}
           <div className="pt-4 space-y-3">
-            <Link
-              href="/login"
-              className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Sign Up
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href={user.dashboardRoute}
+                  className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

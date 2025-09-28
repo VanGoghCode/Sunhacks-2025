@@ -4,36 +4,41 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Mail, Lock } from "lucide-react";
-
-// Test users for demo
-const TEST_USERS = [
-  { email: "test@loopit.com", password: "test123", name: "Test User" },
-  { email: "admin@loopit.com", password: "admin123", name: "Admin User" },
-  { email: "demo@loopit.com", password: "demo123", name: "Demo User" },
-];
+import { authenticateUser, setUserSession } from "@/lib/auth";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    // Simulate authentication
-    const user = TEST_USERS.find(
-      (u) => u.email === email && u.password === password
-    );
+    // Simulate loading time
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // For demo purposes, any password is accepted if email domain is valid
+    if (password.length < 3) {
+      setError("Password must be at least 3 characters");
+      setIsLoading(false);
+      return;
+    }
+
+    const user = authenticateUser(email);
 
     if (user) {
-      // In a real app, you would set authentication cookies/tokens here
-      window.location.href = "/"; // Redirect to home page
+      setUserSession(user);
+      window.location.href = user.dashboardRoute;
     } else {
-      setError("Invalid email or password");
+      setError("Authentication failed");
     }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -128,8 +133,9 @@ export default function LoginPage() {
               variant="primary"
               className="w-full"
               size="lg"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
@@ -149,10 +155,14 @@ export default function LoginPage() {
           {/* Test Credentials */}
           <div className="mt-8 p-4 bg-green-50/50 rounded-xl">
             <p className="text-sm text-green-700 font-medium mb-2">
-              Test Credentials:
+              Demo Accounts:
             </p>
-            <p className="text-xs text-green-600">Email: test@loopit.com</p>
-            <p className="text-xs text-green-600">Password: test123</p>
+            <div className="space-y-1 text-xs text-green-600">
+              <p><strong>LoopIT Dashboard:</strong> admin@loopit.org or admin@loopit.com</p>
+              <p><strong>Amazon Dashboard:</strong> user@amazon.com</p>
+              <p><strong>Marketplace:</strong> Any other email (e.g., user@gmail.com)</p>
+              <p className="mt-2 text-green-500"><em>Use any password (minimum 3 characters)</em></p>
+            </div>
           </div>
         </div>
       </div>
