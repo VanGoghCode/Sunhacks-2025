@@ -17,9 +17,190 @@ import {
   Moon,
   Search,
 } from "lucide-react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import { Bar, Pie, Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 import { Button } from "../../components/ui/Button";
 
 const DashboardPage = () => {
+  // Chart Data
+  const devicesOverTimeData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+    datasets: [
+      {
+        label: "Devices Certified",
+        data: [120, 150, 180, 250, 300, 280, 350, 400, 450],
+        borderColor: "rgb(34, 197, 94)",
+        backgroundColor: "rgba(34, 197, 94, 0.1)",
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: "rgb(34, 197, 94)",
+        pointBorderColor: "white",
+        pointBorderWidth: 2,
+      },
+      {
+        label: "Devices Donated",
+        data: [90, 120, 140, 200, 250, 220, 280, 320, 380],
+        borderColor: "rgb(59, 130, 246)",
+        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: "rgb(59, 130, 246)",
+        pointBorderColor: "white",
+        pointBorderWidth: 2,
+      },
+    ],
+  };
+
+  const lineChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        position: "top" as const,
+        labels: {
+          usePointStyle: true,
+          padding: 20,
+          font: {
+            size: 12,
+          },
+        },
+      },
+      tooltip: {
+        padding: 12,
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        titleFont: {
+          size: 14,
+          weight: "bold" as const,
+        },
+        bodyFont: {
+          size: 13,
+        },
+        usePointStyle: true,
+        boxPadding: 6,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: 12,
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)",
+        },
+        ticks: {
+          font: {
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+  const deviceMixData = {
+    labels: ["Laptops", "Desktops", "Servers", "Monitors", "Phones"],
+    datasets: [
+      {
+        label: "Number of Devices",
+        data: [450, 320, 180, 250, 150],
+        backgroundColor: [
+          "rgba(34, 197, 94, 0.8)",
+          "rgba(34, 197, 94, 0.7)",
+          "rgba(34, 197, 94, 0.6)",
+          "rgba(34, 197, 94, 0.5)",
+          "rgba(34, 197, 94, 0.4)",
+        ],
+        borderColor: "rgba(255, 255, 255, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const co2AvoidedData = {
+    labels: ["Laptops", "Desktops", "Servers", "Monitors", "Phones"],
+    datasets: [
+      {
+        data: [120000, 85000, 65000, 25000, 15000],
+        backgroundColor: [
+          "rgba(34, 197, 94, 0.8)",
+          "rgba(34, 197, 94, 0.7)",
+          "rgba(34, 197, 94, 0.6)",
+          "rgba(34, 197, 94, 0.5)",
+          "rgba(34, 197, 94, 0.4)",
+        ],
+        borderColor: "rgba(255, 255, 255, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const destinationData = {
+    labels: ["Reused Locally", "Donated Internationally", "Recycled"],
+    datasets: [
+      {
+        data: [60, 25, 15],
+        backgroundColor: [
+          "rgba(34, 197, 94, 0.8)",
+          "rgba(34, 197, 94, 0.6)",
+          "rgba(34, 197, 94, 0.4)",
+        ],
+        borderColor: "rgba(255, 255, 255, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom" as const,
+        labels: {
+          padding: 20,
+          usePointStyle: true,
+          font: {
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+
   // Mock data
   const topMetrics = [
     {
@@ -73,7 +254,7 @@ const DashboardPage = () => {
       location: "Mumbai, India",
       needs: "15 Laptops",
       logo: "/images/ngos/education-first.png",
-      deadline: "Oct 15, 2023",
+      deadline: "Oct 15, 2025",
     },
     {
       id: 2,
@@ -81,9 +262,24 @@ const DashboardPage = () => {
       location: "Nairobi, Kenya",
       needs: "30 Desktops",
       logo: "/images/ngos/learn-and-grow.png",
-      deadline: "Oct 20, 2023",
+      deadline: "Oct 20, 2025",
     },
-    // Add more NGO requests as needed
+    {
+      id: 3,
+      name: "Bright Minds Academy",
+      location: "Lagos, Nigeria",
+      needs: "25 Laptops",
+      logo: "/images/ngos/bright-minds.png",
+      deadline: "Oct 25, 2025",
+    },
+    {
+      id: 4,
+      name: "Future Leaders Tech",
+      location: "Accra, Ghana",
+      needs: "20 Tablets",
+      logo: "/images/ngos/Future-leaders.png",
+      deadline: "Oct 30, 2025",
+    },
   ];
 
   return (
@@ -149,21 +345,31 @@ const DashboardPage = () => {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Devices Over Time
-            </h3>
-            {/* Add your line chart component here */}
-            <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-              Line Chart Placeholder
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Devices Over Time
+              </h3>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Certified</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Donated</span>
+                </div>
+              </div>
+            </div>
+            <div className="h-64">
+              <Line data={devicesOverTimeData} options={lineChartOptions} />
             </div>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Device Mix
             </h3>
-            {/* Add your bar chart component here */}
-            <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-              Bar Chart Placeholder
+            <div className="h-64 rounded-lg overflow-hidden p-4">
+              <Bar data={deviceMixData} options={chartOptions} />
             </div>
           </div>
         </div>
@@ -174,18 +380,16 @@ const DashboardPage = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               CO₂ Avoided by Device Type
             </h3>
-            {/* Add your pie chart component here */}
-            <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-              Pie Chart Placeholder
+            <div className="h-64 rounded-lg overflow-hidden p-4">
+              <Pie data={co2AvoidedData} options={chartOptions} />
             </div>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Destination Breakdown
             </h3>
-            {/* Add your pie chart component here */}
-            <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-              Pie Chart Placeholder
+            <div className="h-64 rounded-lg overflow-hidden p-4">
+              <Pie data={destinationData} options={chartOptions} />
             </div>
           </div>
         </div>
