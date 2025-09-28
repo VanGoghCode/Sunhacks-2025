@@ -12,7 +12,7 @@ class GeminiAPI:
         
         # Configure the Gemini API with the official SDK
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
     
     async def analyze_log(self, log_content: str) -> Dict[str, Any]:
         """
@@ -43,8 +43,13 @@ Log content:
             # Use the official SDK to generate content
             response = self.model.generate_content(prompt)
             
+            # Debug: Print the raw response
+            print(f"DEBUG: Raw Gemini response: {response}")
+            print(f"DEBUG: Response text: {response.text if response else 'No response'}")
+            
             if response and response.text:
                 content = response.text.strip()
+                print(f"DEBUG: Content after strip: {content}")
                 
                 # Try to parse JSON from the response
                 try:
@@ -95,5 +100,11 @@ Log content:
         except Exception as e:
             return {
                 "status": "FAILURE",
-                "issues": [f"Error calling Gemini API: {str(e)}"]
+                "issues": [f"Error calling Gemini API: {str(e)}"],
+                "debug_info": {
+                    "api_key_set": bool(self.api_key),
+                    "api_key_preview": f"{self.api_key[:10]}..." if self.api_key else "Not set",
+                    "model_name": "gemini-pro",
+                    "error_details": str(e)
+                }
             }
