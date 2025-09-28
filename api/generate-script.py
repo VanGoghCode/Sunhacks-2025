@@ -1,28 +1,12 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from http.server import BaseHTTPRequestHandler
+import json
 from datetime import datetime
-import os
 from typing import Dict, Any
 
 from schemas import (
     GenerateScriptRequest, 
     GenerateScriptResponse, 
     ErrorResponse
-)
-
-app = FastAPI(
-    title="Demo Wipe Script Generator API",
-    description="API for generating demo wipe scripts",
-    version="1.0.0"
-)
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
 )
 
 
@@ -235,49 +219,100 @@ Demo wipe operation completed successfully"""
     return preview
 
 
-@app.post("/generate-script", response_model=GenerateScriptResponse)
-async def generate_script(request: GenerateScriptRequest):
-    """
-    Generate a safe demo wipe script (Bash or PowerShell) and return it as JSON.
-    """
-    try:
-        # Generate script based on OS
-        if request.os in ["linux", "macos"]:
-            script = generate_bash_script(request)
-        elif request.os == "windows":
-            script = generate_powershell_script(request)
+class handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
+    def do_GET(self):
+        if self.path == '/health':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            response = {
+                "status": "healthy",
+                "service": "script-generator",
+                "timestamp": datetime.now().isoformat()
+            }
+            self.wfile.write(json.dumps(response).encode())
         else:
-            raise HTTPException(status_code=400, detail="Unsupported OS type")
-        
-        # Generate log preview
-        log_preview = generate_log_preview(request)
-        
-        return GenerateScriptResponse(
-            script=script,
-            logPreview=log_preview
-        )
-    
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error generating script: {str(e)}")
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            response = {"message": "Demo Wipe Script Generator API is running"}
+            self.wfile.write(json.dumps(response).encode())
 
-
-@app.get("/")
-async def root():
-    """Health check endpoint"""
-    return {"message": "Demo Wipe Script Generator API is running"}
-
-
-@app.get("/health")
-async def health_check():
-    """Health check with API status"""
-    return {
-        "status": "healthy",
-        "service": "script-generator",
-        "timestamp": datetime.now().isoformat()
-    }
-
-
-# Vercel handler
-def handler(request):
-    """Vercel serverless function handler"""
-    return app
+    def do_POST(self):
+        if self.path == '/generate-script':
+            try:
+                # Read request body
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                request_data = json.loads(post_data.decode('utf-8'))
+                
+                # Validate request data
+                try:
+                    request_obj = GenerateScriptRequest(**request_data)
+                except Exception as e:
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.end_headers()
+                    
+                    error_response = {"error": f"Invalid request data: {str(e)}"}
+                    self.wfile.write(json.dumps(error_response).encode())
+                    return
+                
+                # Generate script based on OS
+                if request_obj.os in ["linux", "macos"]:
+                    script = generate_bash_script(request_obj)
+                elif request_obj.os == "windows":
+                    script = generate_powershell_script(request_obj)
+                else:
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.end_headers()
+                    
+                    error_response = {"error": "Unsupported OS type"}
+                    self.wfile.write(json.dumps(error_response).encode())
+                    return
+                
+                # Generate log preview
+                log_preview = generate_log_preview(request_obj)
+                
+                # Send response
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                
+                response = GenerateScriptResponse(
+                    script=script,
+                    logPreview=log_preview
+                )
+                self.wfile.write(response.model_dump_json().encode())
+                
+            except Exception as e:
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                
+                error_response = {"error": f"Error generating script: {str(e)}"}
+                self.wfile.write(json.dumps(error_response).encode())
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            error_response = {"error": "Not found"}
+            self.wfile.write(json.dumps(error_response).encode())
