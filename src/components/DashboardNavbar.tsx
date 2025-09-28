@@ -11,12 +11,18 @@ interface DashboardNavbarProps {
   title: string;
   userName?: string;
   userEmail?: string;
+  rightContent?: React.ReactNode;
 }
 
-export default function DashboardNavbar({ title, userName, userEmail }: DashboardNavbarProps) {
+export default function DashboardNavbar({
+  title,
+  userName,
+  userEmail,
+  rightContent,
+}: DashboardNavbarProps) {
   const handleLogout = () => {
     clearUserSession();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   return (
@@ -39,15 +45,18 @@ export default function DashboardNavbar({ title, userName, userEmail }: Dashboar
           <div className="flex-1 text-center">
             <h1 className="text-xl font-bold text-green-800">{title}</h1>
           </div>
-          
+
           {/* User Info & Logout */}
           <div className="flex items-center space-x-4">
             {userName && (
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-medium text-green-800">{userName}</p>
-                {userEmail && <p className="text-xs text-green-600">{userEmail}</p>}
+                {userEmail && (
+                  <p className="text-xs text-green-600">{userEmail}</p>
+                )}
               </div>
             )}
+            {rightContent}
             <Button
               variant="outline"
               size="sm"
