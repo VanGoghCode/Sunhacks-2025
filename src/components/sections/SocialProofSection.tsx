@@ -3,12 +3,6 @@
 import React from 'react';
 
 const SocialProofSection = () => {
-  const badges = [
-    { name: 'Government Certified', icon: '🏛️' },
-    { name: 'ISO 27001', icon: '🔒' },
-    { name: 'ESG Compliant', icon: '📊' },
-    { name: 'Carbon Negative', icon: '🌱' },
-  ];
 
   const stats = [
     { number: '12,847', label: 'Laptops Donated', suffix: '' },
@@ -20,19 +14,6 @@ const SocialProofSection = () => {
   return (
     <section id="social-proof" className="py-12 bg-white/40 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Social Proof Badges */}
-        <div className="flex flex-wrap justify-center items-center gap-6 mb-8">
-          {badges.map((badge, index) => (
-            <div
-              key={index}
-              className="flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-white/30"
-            >
-              <span className="text-lg">{badge.icon}</span>
-              <span className="text-sm font-medium text-green-700">{badge.name}</span>
-            </div>
-          ))}
-        </div>
-
         {/* Live Stats Counter */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
