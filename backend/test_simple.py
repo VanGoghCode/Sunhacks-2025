@@ -11,8 +11,11 @@ sys.path.append('/Users/navneetharajan/Navneetha/Study/Projects/Sunhacks-2025/ba
 try:
     import google.generativeai as genai
     
-    # Set the API key
-    api_key = "AIzaSyDwxLBYPFldy1GpJyVujd-iLBAmNuga4vQ"
+    # Set the API key from environment variable
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        print("❌ GEMINI_API_KEY environment variable is not set")
+        exit(1)
     genai.configure(api_key=api_key)
     
     print("✅ Successfully configured Gemini API")
