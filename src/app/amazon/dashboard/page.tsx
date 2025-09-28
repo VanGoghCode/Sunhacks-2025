@@ -136,7 +136,7 @@ export default function AmazonDashboard() {
   const handleDownloadScript = async () => {
     try {
       // Call the Python API to generate the script
-      const response = await fetch('/api/generate-script.py', {
+      const response = await fetch('api/generate-script', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
