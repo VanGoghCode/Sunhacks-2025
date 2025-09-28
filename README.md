@@ -56,15 +56,6 @@ Companies pay us a small per-device fee that covers secure transport, refurbishm
 Schools and NGOs pay nothing.  
 We also sell white-label API access to large enterprises that want to plug the workflow straight into their IT asset-management system.
 
-## Roadmap if we keep going
-Phase 1 (now) – hackathon MVP, static data, happy-path flows.  
-Phase 2 – plug in real inventory DB, driver app, barcode scanner.  
-Phase 3 – multi-country, multi-language, multi-currency, plus an open API for any refurbisher to join the network.
-
 ## Team
 Four friends who met at SunHacks 2025.  
 Design, front-end, security research, and a lot of coffee.
-
-## Questions?
-Open an issue or reach out on the email in our GitHub profile.  
-Thanks for reading—let’s keep laptops alive and kids learning.
