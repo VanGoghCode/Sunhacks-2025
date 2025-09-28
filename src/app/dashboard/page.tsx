@@ -117,7 +117,6 @@ import {
   ComposedChart,
   Scatter,
 } from "recharts";
-import { Card, Title, DonutChart } from "@tremor/react";
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);

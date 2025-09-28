@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import { Button } from "../../components/ui/Button";
 import { CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 
 const ContactPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -62,7 +63,7 @@ const ContactPage = () => {
       icon: "📍",
       title: "Visit Us",
       description: "Come see us at our eco-friendly headquarters.",
-      contact: "123 Green Street, Eco City, EC 12345",
+      contact: "Sun Devil Fitness Complex",
       action: "Get Directions",
     },
   ];
@@ -323,32 +324,16 @@ const ContactPage = () => {
                 with sustainability in mind. Stop by for a tour!
               </p>
 
-              {/* Map Placeholder */}
-              <div className="aspect-video bg-gradient-to-br from-green-200 to-forest-200 rounded-2xl flex items-center justify-center mb-6">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center backdrop-blur-sm">
-                    <svg
-                      className="w-8 h-8 text-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-green-700 font-medium">Interactive Map</p>
-                </div>
+              {/* Office Image */}
+              <div className="aspect-video rounded-2xl overflow-hidden mb-6">
+                <Image
+                  src="/images/Sun Devil Fitness Complex.jpg"
+                  alt="Sun Devil Fitness Complex"
+                  width={800}
+                  height={450}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  priority
+                />
               </div>
 
               {/* Office Info */}
@@ -358,7 +343,7 @@ const ContactPage = () => {
                   <div>
                     <p className="font-medium text-green-800">Address</p>
                     <p className="text-green-600/80">
-                      123 Green Street, Eco City, EC 12345
+                      Sun Devil Fitness Complex
                     </p>
                   </div>
                 </div>
