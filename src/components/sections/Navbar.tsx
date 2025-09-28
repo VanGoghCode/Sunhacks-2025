@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '../ui/Button';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "../ui/Button";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,8 +14,8 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavClick = (href: string) => {
@@ -43,18 +43,15 @@ const Navbar = () => {
         fixed top-0 w-full z-50 transition-all duration-500 ease-out
         ${
           isScrolled
-            ? 'bg-white/85 backdrop-blur-lg shadow-xl shadow-green-500/15 border-b border-white/20'
-            : 'bg-white/20 backdrop-blur-sm'
+            ? "bg-white/85 backdrop-blur-lg shadow-xl shadow-green-500/15 border-b border-white/20"
+            : "bg-white/20 backdrop-blur-sm"
         }
       `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 group"
-          >
+          <Link href="/" className="flex items-center space-x-2 group">
             <Image
               src="/images/Loop_it_1.png"
               alt="Loop It"
@@ -90,11 +87,20 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Buttons */}
+          {/* Auth & CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="outline" size="sm">
+            <Link
+              href="/login"
+              className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
+            >
               Login
-            </Button>
+            </Link>
+            <Link
+              href="/signup"
+              className="text-green-700 hover:text-green-800 font-medium px-4 py-2 rounded-xl transition-all duration-300 hover:bg-green-50/50"
+            >
+              Sign Up
+            </Link>
             <Button variant="primary" size="sm">
               Sign-up
             </Button>
@@ -110,17 +116,21 @@ const Navbar = () => {
             <div className="w-6 h-6 relative flex flex-col justify-center items-center">
               <span
                 className={`block w-5 h-0.5 bg-current transition-all duration-300 ${
-                  isMobileMenuOpen ? 'rotate-45 translate-y-0.5' : '-translate-y-1'
+                  isMobileMenuOpen
+                    ? "rotate-45 translate-y-0.5"
+                    : "-translate-y-1"
                 }`}
               />
               <span
                 className={`block w-5 h-0.5 bg-current transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                  isMobileMenuOpen ? "opacity-0" : "opacity-100"
                 }`}
               />
               <span
                 className={`block w-5 h-0.5 bg-current transition-all duration-300 ${
-                  isMobileMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1'
+                  isMobileMenuOpen
+                    ? "-rotate-45 -translate-y-0.5"
+                    : "translate-y-1"
                 }`}
               />
             </div>
@@ -132,7 +142,7 @@ const Navbar = () => {
       <div
         className={`
           md:hidden overflow-hidden transition-all duration-300 ease-out
-          ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+          ${isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
         `}
       >
         <div className="bg-white/95 backdrop-blur-md border-t border-green-200/50 px-4 py-6 space-y-4">
@@ -157,9 +167,20 @@ const Navbar = () => {
             )
           ))}
           <div className="pt-4 space-y-3">
-            <Button variant="outline" size="sm" className="w-full">
+            <Link
+              href="/login"
+              className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               Login
-            </Button>
+            </Link>
+            <Link
+              href="/signup"
+              className="block px-4 py-3 text-green-700 hover:text-green-800 font-medium rounded-xl transition-all duration-300 hover:bg-green-50/70"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Sign Up
+            </Link>
             <Button variant="primary" size="sm" className="w-full">
               Sign-up
             </Button>

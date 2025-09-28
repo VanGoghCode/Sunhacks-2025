@@ -1,54 +1,126 @@
-import React from 'react';
-import { Button } from '../../components/ui/Button';
+"use client";
+import React, { useState, useRef } from "react";
+import { Button } from "../../components/ui/Button";
+import { CheckCircle2 } from "lucide-react";
 
 const ContactPage = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [showAllFaqs, setShowAllFaqs] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formRef.current) return;
+
+    try {
+      setIsSubmitting(true);
+
+      // Get form data
+      const formData = new FormData(formRef.current);
+      const data = Object.fromEntries(formData);
+
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Reset form
+      formRef.current.reset();
+
+      // Show success message
+      setShowSuccessPopup(true);
+
+      // Hide popup after delay
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const contactMethods = [
     {
-      icon: '�',
-      title: 'WhatsApp Support',
-      description: 'Humans answer in 30 minutes. No bots, just real help.',
-      contact: '+91 98765 43210',
-      action: 'Start Chat',
+      icon: "✉️",
+      title: "Email Us",
+      description: "Send us a message and we'll respond within 24 hours.",
+      contact: "hello@loopit.com",
+      action: "Send Email",
     },
     {
-      icon: '�',
-      title: 'Email Us',
-      description: 'For detailed inquiries about donations or partnerships.',
-      contact: 'hello@loopit.org',
-      action: 'Send Email',
+      icon: "📞",
+      title: "Call Us",
+      description: "Speak directly with our support team.",
+      contact: "+1 (111) 111-1111",
+      action: "Call Now",
     },
     {
-      icon: '💬',
-      title: 'Live Chat',
-      description: 'Get instant support through our live chat.',
-      contact: 'Available 9 AM - 6 PM EST',
-      action: 'Start Chat',
+      icon: "💬",
+      title: "Live Chat",
+      description: "Get instant support through our live chat.",
+      contact: "Available 9 AM - 6 PM MST",
+      action: "Start Chat",
     },
     {
-      icon: '📍',
-      title: 'Visit Us',
-      description: 'Come see us at our eco-friendly headquarters.',
-      contact: '123 Green Street, Eco City, EC 12345',
-      action: 'Get Directions',
+      icon: "📍",
+      title: "Visit Us",
+      description: "Come see us at our eco-friendly headquarters.",
+      contact: "123 Green Street, Eco City, EC 12345",
+      action: "Get Directions",
     },
   ];
 
   const faqs = [
     {
-      question: 'How do you ensure products are truly sustainable?',
-      answer: 'We have a rigorous vetting process that includes third-party certifications, supply chain audits, and environmental impact assessments for all products on our platform.',
+      question: "Why not just delete files or factory reset a device?",
+      answer:
+        "Deleting or resetting does not securely remove data. Anyone with recovery tools can still retrieve files. Our process follows NIST SP 800-88 standards (industry-recognized), ensuring data is permanently erased and auditable.",
     },
     {
-      question: 'What is your return policy?',
-      answer: 'We offer a 30-day return policy for all products. If you\'re not satisfied, we\'ll provide a full refund or exchange, and we\'ll even handle the eco-friendly packaging for returns.',
+      question: "Aren’t there already wiping tools like DBAN or Blancco?",
+      answer:
+        "Yes, but most tools either don’t generate verifiable certificates needed for compliance or donations, or require expensive licenses. We combine secure wipe logs with tamper-evident certificates and sustainability metrics in one easy workflow.",
     },
     {
-      question: 'Do you ship internationally?',
-      answer: 'Yes, we ship to over 50 countries worldwide. We use carbon-neutral shipping methods and partner with local distributors to minimize our environmental footprint.',
+      question: "Why would organizations trust your certificate?",
+      answer:
+        "We follow NIST-compliant sanitization methods, generate digitally signed certificates with QR verification, and provide a transparent audit trail of who wiped, when, and how. This builds trust with NGOs, regulators, and auditors.",
     },
     {
-      question: 'How can I become a vendor on Loop It?',
-      answer: 'We welcome sustainable brands! Apply through our vendor portal with your sustainability certifications, product information, and company values. Our team will review your application within 5 business days.',
+      question: "What about companies that prefer shredding drives?",
+      answer:
+        "Some industries like finance, defense, and healthcare will always destroy drives. But schools, SMBs, and nonprofits often want to reuse, they just lack affordable, verifiable wiping. We’re solving for that audience first.",
+    },
+    {
+      question: "What happens if a wipe log is incomplete or tampered with?",
+      answer:
+        "Our backend verifies logs automatically. If a wipe is incomplete, the device is flagged as 'Wipe Failed' and no certificate is issued. This prevents false claims and ensures only properly wiped devices are certified.",
+    },
+    {
+      question: "How does this reduce e-waste?",
+      answer:
+        "By giving organizations confidence to donate instead of destroy. Each verified certificate proves the device is safe to reuse, unlocking devices for schools, NGOs, and communities instead of landfills.",
+    },
+    {
+      question: "What about devices that are too old or locked (BIOS/iCloud)?",
+      answer:
+        "Not all devices can be reused. Our platform can classify them: reusable devices are certified and sent to donation, while non-reusable ones are marked for responsible recycling. This closes the loop responsibly.",
+    },
+    {
+      question: "How is the CO₂ impact calculated?",
+      answer:
+        "We use standard lifecycle analysis values. For example, one reused laptop saves ~200 kg CO₂ compared to manufacturing a new one. Each certificate includes an impact score that organizations can use in ESG reports.",
+    },
+    {
+      question: "Who can use this platform?",
+      answer:
+        "Businesses and schools can clear old IT closets with confidence, nonprofits and NGOs can receive working certified devices, and refurbishers or recyclers can simplify intake with verified wipe proof.",
+    },
+    {
+      question: "What’s the business model?",
+      answer:
+        "We offer per-device certificate fees ($1–3), organization subscriptions for unlimited wipes and reporting, and in the future, carbon credit integration so organizations can offset and report sustainability impact.",
     },
   ];
 
@@ -61,12 +133,12 @@ const ContactPage = () => {
           <div className="text-center">
             <h1 className="text-4xl sm:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-green-700 via-forest-600 to-green-800 bg-clip-text text-transparent">
-                Get In Touch
+                Have Questions? We're Here to Help!
               </span>
             </h1>
             <p className="text-xl text-green-800 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Have questions about sustainable living or need help with your order? 
-              We&apos;re here to help you on your eco-friendly journey.
+              Have a question or want to collaborate? Let&apos;s make sure every
+              retired device finds a second life safely and sustainably.
             </p>
           </div>
         </div>
@@ -79,7 +151,7 @@ const ContactPage = () => {
             {contactMethods.map((method, index) => (
               <div
                 key={index}
-                className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 border border-white/50"
+                className="flex flex-col justify-around items-center bg-white/60 backdrop-blur-sm rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 border border-white/50"
               >
                 <div className="text-4xl mb-4">{method.icon}</div>
                 <h3 className="text-xl font-bold text-green-800 mb-4">
@@ -109,26 +181,66 @@ const ContactPage = () => {
               <h2 className="text-3xl font-bold text-green-800 mb-6">
                 Send Us a Message
               </h2>
-              <p className="text-green-600/80 mb-8">
-                Fill out the form below and we&apos;ll get back to you as soon as possible.
+              <p className="text-green-600/90 mb-8">
+                Fill out the form below and we&apos;ll get back to you as soon
+                as possible.
               </p>
-              
-              <form className="space-y-6">
+
+              {/* Success Popup */}
+              <div
+                className={`
+                  fixed top-4 right-4 
+                  bg-green-100 border border-green-500 
+                  text-green-700 px-6 py-4 rounded-xl 
+                  shadow-lg flex items-center space-x-3
+                  transition-all duration-500 transform
+                  ${
+                    showSuccessPopup
+                      ? "translate-y-0 opacity-100"
+                      : "-translate-y-12 opacity-0 pointer-events-none"
+                  }
+                  z-50
+                `}
+              >
+                <div className="flex-shrink-0 bg-green-50 rounded-full p-2">
+                  <CheckCircle2 className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <p className="font-medium">Success!</p>
+                  <p className="text-sm text-green-600">
+                    Your message has been sent successfully.
+                  </p>
+                </div>
+              </div>
+
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                method="POST"
+              >
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-green-700 font-medium mb-2">
+                    <label
+                      htmlFor="firstName"
+                      className="block text-green-700 font-medium mb-2"
+                    >
                       First Name
                     </label>
                     <input
                       type="text"
                       id="firstName"
                       name="firstName"
+                      required
                       className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                       placeholder="Your first name"
                     />
                   </div>
                   <div>
-                    <label htmlFor="lastName" className="block text-green-700 font-medium mb-2">
+                    <label
+                      htmlFor="lastName"
+                      className="block text-green-700 font-medium mb-2"
+                    >
                       Last Name
                     </label>
                     <input
@@ -140,9 +252,12 @@ const ContactPage = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-green-700 font-medium mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-green-700 font-medium mb-2"
+                  >
                     Email Address
                   </label>
                   <input
@@ -153,9 +268,12 @@ const ContactPage = () => {
                     placeholder="your@email.com"
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="subject" className="block text-green-700 font-medium mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-green-700 font-medium mb-2"
+                  >
                     Subject
                   </label>
                   <select
@@ -170,9 +288,12 @@ const ContactPage = () => {
                     <option value="feedback">Feedback</option>
                   </select>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-green-700 font-medium mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-green-700 font-medium mb-2"
+                  >
                     Message
                   </label>
                   <textarea
@@ -183,9 +304,15 @@ const ContactPage = () => {
                     placeholder="Tell us how we can help you..."
                   ></textarea>
                 </div>
-                
-                <Button variant="primary" size="lg" className="w-full">
-                  Send Message
+
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
@@ -196,45 +323,68 @@ const ContactPage = () => {
                 Visit Our Office
               </h2>
               <p className="text-green-600/80 mb-8">
-                Located in the heart of the eco-district, our office is designed with 
-                sustainability in mind. Stop by for a tour!
+                Located in the heart of the eco-district, our office is designed
+                with sustainability in mind. Stop by for a tour!
               </p>
-              
+
               {/* Map Placeholder */}
               <div className="aspect-video bg-gradient-to-br from-green-200 to-forest-200 rounded-2xl flex items-center justify-center mb-6">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center backdrop-blur-sm">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <svg
+                      className="w-8 h-8 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
                     </svg>
                   </div>
                   <p className="text-green-700 font-medium">Interactive Map</p>
                 </div>
               </div>
-              
+
               {/* Office Info */}
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="text-green-500 mt-1">📍</div>
                   <div>
                     <p className="font-medium text-green-800">Address</p>
-                    <p className="text-green-600/80">123 Green Street, Eco City, EC 12345</p>
+                    <p className="text-green-600/80">
+                      123 Green Street, Eco City, EC 12345
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="text-green-500 mt-1">🕒</div>
                   <div>
                     <p className="font-medium text-green-800">Office Hours</p>
-                    <p className="text-green-600/80">Mon - Fri: 9:00 AM - 6:00 PM</p>
+                    <p className="text-green-600/80">
+                      Mon - Fri: 9:00 AM - 6:00 PM
+                    </p>
                     <p className="text-green-600/80">Sat: 10:00 AM - 4:00 PM</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="text-green-500 mt-1">🚌</div>
                   <div>
-                    <p className="font-medium text-green-800">Public Transport</p>
-                    <p className="text-green-600/80">Green Line Metro - Eco Station</p>
+                    <p className="font-medium text-green-800">
+                      Public Transport
+                    </p>
+                    <p className="text-green-600/80">
+                      Green Line Metro - Eco Station
+                    </p>
                   </div>
                 </div>
               </div>
@@ -247,16 +397,16 @@ const ContactPage = () => {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-green-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl font-bold text-green-800 mb-6 ">
               Frequently Asked Questions
             </h2>
-            <p className="text-xl text-green-600/80">
+            <p className="text-xl text-green-600">
               Find quick answers to the most common questions about Loop It.
             </p>
           </div>
 
           <div className="space-y-6">
-            {faqs.map((faq, index) => (
+            {faqs.slice(0, showAllFaqs ? faqs.length : 4).map((faq, index) => (
               <div
                 key={index}
                 className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50"
@@ -273,10 +423,14 @@ const ContactPage = () => {
 
           <div className="text-center mt-12">
             <p className="text-green-600/80 mb-4">
-              Still have questions?
+              Still have questions? Contact Us
             </p>
-            <Button variant="outline" size="lg">
-              View All FAQs
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => setShowAllFaqs(!showAllFaqs)}
+            >
+              {showAllFaqs ? "Show Less FAQs" : "View All FAQs"}
             </Button>
           </div>
         </div>
