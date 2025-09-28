@@ -441,7 +441,7 @@ export const MarketplaceContent = () => {
                           size="sm"
                           className={`flex-1 shadow-lg transform transition-all duration-200 hover:scale-102 ${
                             device.quantity > 0
-                              ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
+                              ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-green-700"
                               : "bg-gray-400 cursor-not-allowed"
                           }`}
                           onClick={() => handleAddToCart(device)}

@@ -4,32 +4,32 @@ import { Button } from "../../components/ui/Button";
 const AboutPage = () => {
   const teamMembers = [
     {
-      name: "Sarah Chen",
-      role: "CEO & Founder",
+      name: "Kirtan",
+      role: "Full-Stack & Cloud Developer",
       description:
-        "Environmental scientist with 10+ years in sustainable technology.",
-      image: "/api/placeholder/200/200",
+        "Full-stack and cloud developer passionate about green technology solutions.",
+      image: "/team/kirtan.jpg",
     },
     {
-      name: "Marcus Johnson",
-      role: "CTO",
+      name: "Navneetha",
+      role: "Backend & AI Developer",
       description:
-        "Full-stack developer passionate about green technology solutions.",
-      image: "/api/placeholder/200/200",
+        "Backend and AI developer passionate about green technology solutions.",
+      image: "/team/navneetha.png",
     },
     {
-      name: "Luna Rodriguez",
-      role: "Head of Design",
+      name: "Shubham",
+      role: "Project Manager",
       description:
-        "UX designer focused on creating intuitive sustainable experiences.",
-      image: "/api/placeholder/200/200",
+        "Project manager ensuring smooth execution of our sustainability initiatives.",
+      image: "/team/shubham.jpg",
     },
     {
-      name: "David Park",
-      role: "Marketing Director",
+      name: "Smit",
+      role: "Data Analyst",
       description:
-        "Brand strategist dedicated to spreading environmental awareness.",
-      image: "/api/placeholder/200/200",
+        "Developer and data enthusiast focused on impactful solutions.",
+      image: "/team/smit.png",
     },
   ];
 
@@ -154,22 +154,12 @@ const AboutPage = () => {
                 className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 border border-white/50"
               >
                 <div className="relative mb-6">
-                  <div className="w-32 h-32 bg-gradient-to-br from-green-200 to-forest-200 rounded-full mx-auto flex items-center justify-center overflow-hidden">
-                    <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center">
-                      <svg
-                        className="w-8 h-8 text-green-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                    </div>
+                  <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-green-200 shadow-lg">
+                    <img
+                      src={member.image}
+                      alt={`${member.name} - ${member.role}`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-green-800 mb-2">

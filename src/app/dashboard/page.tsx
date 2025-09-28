@@ -292,30 +292,10 @@ export default function Dashboard() {
   };
 
   const stats = [
-    {
-      label: "Devices Wiped",
-      value: "1,247",
-      icon: Shield,
-      color: "text-blue-600",
-    },
-    {
-      label: "Certificates Issued",
-      value: "892",
-      icon: BarChart3,
-      color: "text-green-600",
-    },
-    {
-      label: "CO₂ Saved",
-      value: "24.8 tons",
-      icon: Recycle,
-      color: "text-purple-600",
-    },
-    {
-      label: "Partner NGOs",
-      value: "45",
-      icon: Users,
-      color: "text-orange-600",
-    },
+    { label: 'Devices Wiped', value: '1,247', icon: Shield, color: 'text-blue-600' },
+    { label: 'Certificates Issued', value: '892', icon: BarChart3, color: 'text-green-600' },
+    { label: 'CO₂ Saved', value: '24,800 kg', icon: Recycle, color: 'text-purple-600' },
+    { label: 'Partner NGOs', value: '45', icon: Users, color: 'text-orange-600' },
   ];
 
   return (

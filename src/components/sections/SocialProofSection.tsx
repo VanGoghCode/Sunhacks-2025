@@ -12,7 +12,7 @@ const SocialProofSection = () => {
 
   const stats = [
     { number: '12,847', label: 'Laptops Donated', suffix: '' },
-    { number: '156.2', label: 'Tonnes CO₂ Saved', suffix: 't' },
+    { number: '156,200', label: 'kg CO₂ Saved', suffix: '' },
     { number: '89', label: 'NGOs Connected', suffix: '+' },
     { number: '25,394', label: 'Kids Learning', suffix: '+' },
   ];

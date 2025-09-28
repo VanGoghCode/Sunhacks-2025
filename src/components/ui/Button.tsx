@@ -77,7 +77,7 @@ export const Button: React.FC<ButtonProps> = ({
       `}
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 flex items-center">{children}</span>
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
     </button>
   );

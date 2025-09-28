@@ -10,14 +10,14 @@ const ConnectedNGOsSection = () => {
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
 
   const ngoLogos = [
-    { name: 'Hope Foundation', logo: '🏫', state: 'Maharashtra' },
-    { name: 'Digital Dreams', logo: '💻', state: 'Karnataka' },
-    { name: 'Learn & Grow', logo: '📚', state: 'Tamil Nadu' },
-    { name: 'Future Leaders', logo: '🎓', state: 'Delhi' },
-    { name: 'Education First', logo: '✏️', state: 'Gujarat' },
-    { name: 'Bright Minds', logo: '🧠', state: 'Rajasthan' },
-    { name: 'Tech4All', logo: '🌐', state: 'Kerala' },
-    { name: 'Knowledge Hub', logo: '📖', state: 'Punjab' },
+    { name: 'TechCorps', logo: '🏫', state: 'California' },
+    { name: 'Digital Divide', logo: '💻', state: 'Texas' },
+    { name: 'Computers 4 Kids', logo: '📚', state: 'New York' },
+    { name: 'World Computer Exchange', logo: '🎓', state: 'Florida' },
+    { name: 'Tech Goes Home', logo: '✏️', state: 'Massachusetts' },
+    { name: 'Digital Wish', logo: '🧠', state: 'Illinois' },
+    { name: 'EveryoneOn', logo: '🌐', state: 'Washington' },
+    { name: 'National Cristina Foundation', logo: '📖', state: 'Connecticut' },
   ];
 
   // NGOs with actual available images
@@ -39,45 +39,45 @@ const ConnectedNGOsSection = () => {
   ];
 
   const ngosByState = {
-    'Maharashtra': [
-      { name: 'Hope Foundation Mumbai', location: 'Mumbai', students: 450, verified: '2023' },
-      { name: 'Rural Education Trust', location: 'Pune', students: 280, verified: '2022' },
-      { name: 'Digital Literacy Center', location: 'Nashik', students: 320, verified: '2023' },
+    'California': [
+      { name: 'TechCorps Bay Area', location: 'San Francisco', students: 650, verified: '2023' },
+      { name: 'Silicon Valley Education Foundation', location: 'San Jose', students: 480, verified: '2022' },
+      { name: 'LA Digital Academy', location: 'Los Angeles', students: 520, verified: '2023' },
     ],
-    'Karnataka': [
-      { name: 'Bangalore Learning Hub', location: 'Bangalore', students: 600, verified: '2023' },
-      { name: 'Tech Education Foundation', location: 'Mysore', students: 200, verified: '2022' },
-      { name: 'Innovation Academy', location: 'Hubli', students: 180, verified: '2023' },
+    'Texas': [
+      { name: 'Digital Divide Dallas', location: 'Dallas', students: 580, verified: '2023' },
+      { name: 'Austin Tech Alliance', location: 'Austin', students: 420, verified: '2022' },
+      { name: 'Houston Learning Hub', location: 'Houston', students: 390, verified: '2023' },
     ],
-    'Tamil Nadu': [
-      { name: 'Chennai Digital School', location: 'Chennai', students: 520, verified: '2023' },
-      { name: 'South India Education', location: 'Coimbatore', students: 340, verified: '2022' },
-      { name: 'Tamil Learning Center', location: 'Madurai', students: 290, verified: '2023' },
+    'New York': [
+      { name: 'NYC Computer Access Center', location: 'New York City', students: 720, verified: '2023' },
+      { name: 'Buffalo Digital Initiative', location: 'Buffalo', students: 340, verified: '2022' },
+      { name: 'Albany Tech Foundation', location: 'Albany', students: 280, verified: '2023' },
     ],
-    'Delhi': [
-      { name: 'Capital Tech Academy', location: 'New Delhi', students: 480, verified: '2023' },
-      { name: 'Metro Education Hub', location: 'Gurgaon', students: 350, verified: '2022' },
-      { name: 'Future Skills Center', location: 'Noida', students: 420, verified: '2023' },
+    'Florida': [
+      { name: 'Miami Digital Bridge', location: 'Miami', students: 460, verified: '2023' },
+      { name: 'Orlando Tech Education', location: 'Orlando', students: 350, verified: '2022' },
+      { name: 'Tampa Learning Center', location: 'Tampa', students: 320, verified: '2023' },
     ],
-    'Gujarat': [
-      { name: 'Ahmedabad Tech School', location: 'Ahmedabad', students: 380, verified: '2023' },
-      { name: 'Gujarat Digital Foundation', location: 'Surat', students: 240, verified: '2022' },
-      { name: 'Innovation Gujarat', location: 'Vadodara', students: 300, verified: '2023' },
+    'Massachusetts': [
+      { name: 'Boston Tech Initiative', location: 'Boston', students: 540, verified: '2023' },
+      { name: 'Cambridge Digital Lab', location: 'Cambridge', students: 380, verified: '2022' },
+      { name: 'Worcester Education Hub', location: 'Worcester', students: 290, verified: '2023' },
     ],
-    'Rajasthan': [
-      { name: 'Desert Learning Hub', location: 'Jaipur', students: 320, verified: '2023' },
-      { name: 'Rajasthan Education Trust', location: 'Jodhpur', students: 200, verified: '2022' },
-      { name: 'Heritage Tech School', location: 'Udaipur', students: 180, verified: '2023' },
+    'Illinois': [
+      { name: 'Chicago Digital Academy', location: 'Chicago', students: 620, verified: '2023' },
+      { name: 'Rockford Tech Center', location: 'Rockford', students: 240, verified: '2022' },
+      { name: 'Peoria Learning Foundation', location: 'Peoria', students: 310, verified: '2023' },
     ],
-    'Kerala': [
-      { name: 'Kerala Tech Academy', location: 'Kochi', students: 420, verified: '2023' },
-      { name: 'Backwaters Learning', location: 'Alleppey', students: 160, verified: '2022' },
-      { name: 'Spice Coast Education', location: 'Kozhikode', students: 250, verified: '2023' },
+    'Washington': [
+      { name: 'Seattle Tech Alliance', location: 'Seattle', students: 580, verified: '2023' },
+      { name: 'Spokane Digital Hub', location: 'Spokane', students: 220, verified: '2022' },
+      { name: 'Tacoma Education Center', location: 'Tacoma', students: 350, verified: '2023' },
     ],
-    'Punjab': [
-      { name: 'Punjab Digital Hub', location: 'Chandigarh', students: 350, verified: '2023' },
-      { name: 'Golden Temple Academy', location: 'Amritsar', students: 280, verified: '2022' },
-      { name: 'Sikh Education Trust', location: 'Ludhiana', students: 300, verified: '2023' },
+    'Connecticut': [
+      { name: 'Hartford Tech Foundation', location: 'Hartford', students: 380, verified: '2023' },
+      { name: 'New Haven Digital Center', location: 'New Haven', students: 290, verified: '2022' },
+      { name: 'Bridgeport Learning Lab', location: 'Bridgeport', students: 260, verified: '2023' },
     ],
   };
 
@@ -131,11 +131,6 @@ const ConnectedNGOsSection = () => {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-green-800">Connected Organizations:</h3>
-                {connectedNGOs.length > 6 && (
-                  <p className="text-xs text-green-600 mt-1">
-                    Showing 6 of {connectedNGOs.length} • Position {(currentCarouselIndex % connectedNGOs.length) + 1}
-                  </p>
-                )}
               </div>
               {connectedNGOs.length > 6 && (
                 <div className="flex space-x-2">
@@ -175,7 +170,7 @@ const ConnectedNGOsSection = () => {
                     style={{ width: `${100 / 6}%` }}
                   >
                     {/* NGO Logo */}
-                    <div className="w-14 h-14 mb-3 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden group hover:shadow-lg transition-all duration-300 mx-auto">
+                    <div className="w-18 h-18 mb-3 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden group hover:shadow-lg transition-all duration-300 mx-auto">
                       <Image 
                         src={`/ngos/${ngo.logo}`} 
                         alt={ngo.name}
