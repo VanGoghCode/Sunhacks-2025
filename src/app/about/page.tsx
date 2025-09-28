@@ -1,54 +1,62 @@
-import React from 'react';
-import { Button } from '../../components/ui/Button';
+import React from "react";
+import { Button } from "../../components/ui/Button";
 
 const AboutPage = () => {
   const teamMembers = [
     {
-      name: 'Sarah Chen',
-      role: 'CEO & Founder',
-      description: 'Environmental scientist with 10+ years in sustainable technology.',
-      image: '/api/placeholder/200/200',
+      name: "Sarah Chen",
+      role: "CEO & Founder",
+      description:
+        "Environmental scientist with 10+ years in sustainable technology.",
+      image: "/api/placeholder/200/200",
     },
     {
-      name: 'Marcus Johnson',
-      role: 'CTO',
-      description: 'Full-stack developer passionate about green technology solutions.',
-      image: '/api/placeholder/200/200',
+      name: "Marcus Johnson",
+      role: "CTO",
+      description:
+        "Full-stack developer passionate about green technology solutions.",
+      image: "/api/placeholder/200/200",
     },
     {
-      name: 'Luna Rodriguez',
-      role: 'Head of Design',
-      description: 'UX designer focused on creating intuitive sustainable experiences.',
-      image: '/api/placeholder/200/200',
+      name: "Luna Rodriguez",
+      role: "Head of Design",
+      description:
+        "UX designer focused on creating intuitive sustainable experiences.",
+      image: "/api/placeholder/200/200",
     },
     {
-      name: 'David Park',
-      role: 'Marketing Director',
-      description: 'Brand strategist dedicated to spreading environmental awareness.',
-      image: '/api/placeholder/200/200',
+      name: "David Park",
+      role: "Marketing Director",
+      description:
+        "Brand strategist dedicated to spreading environmental awareness.",
+      image: "/api/placeholder/200/200",
     },
   ];
 
   const values = [
     {
-      icon: '🌱',
-      title: 'Sustainability First',
-      description: 'Every decision we make considers environmental impact and long-term sustainability.',
+      icon: "🌱",
+      title: "Sustainability First",
+      description:
+        "Every decision we make considers environmental impact and long-term sustainability.",
     },
     {
-      icon: '🤝',
-      title: 'Community Driven',
-      description: 'We believe in the power of community to create meaningful change.',
+      icon: "🤝",
+      title: "Community Driven",
+      description:
+        "We believe in the power of community to create meaningful change.",
     },
     {
-      icon: '💡',
-      title: 'Innovation',
-      description: 'Constantly pushing boundaries to find better, greener solutions.',
+      icon: "💡",
+      title: "Innovation",
+      description:
+        "Constantly pushing boundaries to find better, greener solutions.",
     },
     {
-      icon: '🌍',
-      title: 'Global Impact',
-      description: 'Thinking globally while acting locally to create positive change.',
+      icon: "🌍",
+      title: "Global Impact",
+      description:
+        "Thinking globally while acting locally to create positive change.",
     },
   ];
 
@@ -61,52 +69,50 @@ const AboutPage = () => {
           <div className="text-center">
             <h1 className="text-4xl sm:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-green-700 via-forest-600 to-green-800 bg-clip-text text-transparent">
-                About Loop It
+                Turning Eco-Ready Tech Into Impact
               </span>
             </h1>
             <p className="text-xl text-green-800 mb-8 max-w-3xl mx-auto leading-relaxed">
-              We&apos;re on a mission to create a sustainable future through innovative technology and community-driven solutions. 
-              Loop It connects eco-conscious consumers with sustainable products and services.
+              Securely wipe, certify, and repurpose devices keeping technology
+              in use, out of landfills, and in the hands of communities that
+              need it most.
             </p>
           </div>
         </div>
       </section>
 
       {/* Story Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-green-800 mb-6">
-                Our Story
-              </h2>
-              <div className="space-y-6 text-green-800 leading-relaxed">
-                <p>
-                  Founded in 2023, Loop It emerged from a simple belief: that technology should serve 
-                  the planet, not harm it. Our founders, a group of environmental scientists and 
-                  technology experts, came together with a shared vision of creating a platform 
-                  that makes sustainable living accessible to everyone.
-                </p>
-                <p>
-                  What started as a small idea has grown into a thriving community of eco-warriors, 
-                  sustainable brands, and conscious consumers. We&apos;ve facilitated thousands of 
-                  sustainable purchases and helped reduce countless tons of waste.
-                </p>
-                <p>
-                  Today, we continue to innovate and expand our platform, always keeping 
-                  sustainability at the heart of everything we do.
-                </p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-green-200 to-forest-200 rounded-3xl flex items-center justify-center overflow-hidden shadow-2xl">
-                <div className="w-32 h-32 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <svg className="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9V3" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+      <section className="py-20 bg-green-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-green-800 text-center mb-12">
+            Why We Exist
+          </h2>
+          <div className="space-y-8 text-green-800 text-lg leading-relaxed text-justify">
+            <p>
+              At LoopIT, we believe every device has a second life waiting to
+              happen. Millions of electronics sit unused each year, often
+              discarded because of data security fears. We empower organizations
+              to securely wipe, certify, and donate their{" "}
+              <span className="font-semibold">eco-ready tech</span>, giving
+              devices a purposeful, sustainable future while reducing e-waste
+              and environmental impact.
+            </p>
+            <p>
+              Too often, functioning devices end up in drawers or landfills
+              simply because organizations don’t have a trusted, verifiable way
+              to handle sensitive data. LoopIT bridges this gap with secure
+              wipes, tamper-evident certificates, and an easy donation flow
+              turning idle technology into real-world impact for schools,
+              nonprofits, and communities while keeping carbon emissions in
+              check.
+            </p>
+            <p>
+              We’re not just about technology, we’re about creating a{" "}
+              <span className="font-semibold">circular ecosystem</span> where
+              devices, people, and the planet all benefit. Our mission is to
+              transform how organizations think about e-waste, turning what was
+              once “discarded” into meaningful action and opportunity.
+            </p>
           </div>
         </div>
       </section>
@@ -119,7 +125,8 @@ const AboutPage = () => {
               Our Values
             </h2>
             <p className="text-xl text-green-800 max-w-2xl mx-auto">
-              These core principles guide everything we do and shape our vision for a sustainable future.
+              These core principles guide everything we do and shape our vision
+              for a sustainable future.
             </p>
           </div>
 
@@ -150,7 +157,8 @@ const AboutPage = () => {
               Meet Our Team
             </h2>
             <p className="text-xl text-green-800 max-w-2xl mx-auto">
-              The passionate individuals working to make sustainability accessible to everyone.
+              The passionate individuals working to make sustainability
+              accessible to everyone.
             </p>
           </div>
 
@@ -163,8 +171,18 @@ const AboutPage = () => {
                 <div className="relative mb-6">
                   <div className="w-32 h-32 bg-gradient-to-br from-green-200 to-forest-200 rounded-full mx-auto flex items-center justify-center overflow-hidden">
                     <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      <svg
+                        className="w-8 h-8 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -172,9 +190,7 @@ const AboutPage = () => {
                 <h3 className="text-xl font-bold text-green-800 mb-2">
                   {member.name}
                 </h3>
-                <p className="text-green-500 font-medium mb-4">
-                  {member.role}
-                </p>
+                <p className="text-green-500 font-medium mb-4">{member.role}</p>
                 <p className="text-green-700 text-sm leading-relaxed">
                   {member.description}
                 </p>
@@ -192,7 +208,8 @@ const AboutPage = () => {
               Join Our Mission
             </h2>
             <p className="text-xl text-green-800 mb-8 max-w-2xl mx-auto">
-              Ready to be part of the sustainable revolution? Join thousands of others making a positive impact.
+              Ready to be part of the sustainable revolution? Join thousands of
+              others making a positive impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="primary" size="lg">
