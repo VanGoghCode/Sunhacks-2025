@@ -33,7 +33,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           os: "linux",
-          driveType: "ssd",
+          driveType: "sata_ssd",
           operator: "Test User",
           modelInfo: "Test Laptop",
           dummySizeMB: 10,

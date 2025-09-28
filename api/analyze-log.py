@@ -52,76 +52,63 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
 
     def do_POST(self):
-        if self.path == '/analyze-log':
-            try:
-                if not gemini_api:
-                    self.send_response(500)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    
-                    error_response = {"error": "Gemini API not configured. Please set GEMINI_API_KEY environment variable."}
-                    self.wfile.write(json.dumps(error_response).encode())
-                    return
-                
-                # Read request body
-                content_length = int(self.headers['Content-Length'])
-                post_data = self.rfile.read(content_length)
-                request_data = json.loads(post_data.decode('utf-8'))
-                
-                # Validate request data
-                try:
-                    request_obj = AnalyzeLogRequest(**request_data)
-                except Exception as e:
-                    self.send_response(400)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    
-                    error_response = {"error": f"Invalid request data: {str(e)}"}
-                    self.wfile.write(json.dumps(error_response).encode())
-                    return
-                
-                # Send log to Gemini API for analysis
-                import asyncio
-                result = asyncio.run(gemini_api.analyze_log(request_obj.logContent))
-                
-                # Validate the result structure
-                if "status" not in result or "issues" not in result:
-                    self.send_response(500)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    
-                    error_response = {"error": "Invalid response from Gemini API"}
-                    self.wfile.write(json.dumps(error_response).encode())
-                    return
-                
-                # Send response
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-                
-                response = AnalyzeLogResponse(
-                    status=result["status"],
-                    issues=result["issues"]
-                )
-                self.wfile.write(response.model_dump_json().encode())
-                
-            except Exception as e:
+        # Accept POST at any path this function is mounted on (Vercel maps to /api/analyze-log)
+        try:
+            if not gemini_api:
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
-                
-                error_response = {"error": f"Error analyzing log: {str(e)}"}
+                error_response = {"error": "Gemini API not configured. Please set GEMINI_API_KEY environment variable."}
                 self.wfile.write(json.dumps(error_response).encode())
-        else:
-            self.send_response(404)
+                return
+
+            # Read request body
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            request_data = json.loads(post_data.decode('utf-8') or "{}")
+
+            # Validate request data
+            try:
+                request_obj = AnalyzeLogRequest(**request_data)
+            except Exception as e:
+                self.send_response(400)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                error_response = {"error": f"Invalid request data: {str(e)}"}
+                self.wfile.write(json.dumps(error_response).encode())
+                return
+
+            # Send log to Gemini API for analysis
+            import asyncio
+            result = asyncio.run(gemini_api.analyze_log(request_obj.logContent))
+
+            # Validate the result structure
+            if "status" not in result or "issues" not in result:
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                error_response = {"error": "Invalid response from Gemini API"}
+                self.wfile.write(json.dumps(error_response).encode())
+                return
+
+            # Send response
+            self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            
-            error_response = {"error": "Not found"}
+            response = AnalyzeLogResponse(
+                status=result["status"],
+                issues=result["issues"]
+            )
+            self.wfile.write(response.model_dump_json().encode())
+
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            error_response = {"error": f"Error analyzing log: {str(e)}"}
             self.wfile.write(json.dumps(error_response).encode())

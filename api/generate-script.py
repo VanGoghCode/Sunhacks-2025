@@ -250,69 +250,58 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
 
     def do_POST(self):
-        if self.path == '/generate-script':
+        # Accept POST at any path this function is mounted on (Vercel maps to /api/generate-script)
+        try:
+            # Read request body
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            request_data = json.loads(post_data.decode('utf-8') or "{}")
+
+            # Validate request data
             try:
-                # Read request body
-                content_length = int(self.headers['Content-Length'])
-                post_data = self.rfile.read(content_length)
-                request_data = json.loads(post_data.decode('utf-8'))
-                
-                # Validate request data
-                try:
-                    request_obj = GenerateScriptRequest(**request_data)
-                except Exception as e:
-                    self.send_response(400)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    
-                    error_response = {"error": f"Invalid request data: {str(e)}"}
-                    self.wfile.write(json.dumps(error_response).encode())
-                    return
-                
-                # Generate script based on OS
-                if request_obj.os in ["linux", "macos"]:
-                    script = generate_bash_script(request_obj)
-                elif request_obj.os == "windows":
-                    script = generate_powershell_script(request_obj)
-                else:
-                    self.send_response(400)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    
-                    error_response = {"error": "Unsupported OS type"}
-                    self.wfile.write(json.dumps(error_response).encode())
-                    return
-                
-                # Generate log preview
-                log_preview = generate_log_preview(request_obj)
-                
-                # Send response
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-                
-                response = GenerateScriptResponse(
-                    script=script,
-                    logPreview=log_preview
-                )
-                self.wfile.write(response.model_dump_json().encode())
-                
+                request_obj = GenerateScriptRequest(**request_data)
             except Exception as e:
-                self.send_response(500)
+                self.send_response(400)
                 self.send_header('Content-type', 'application/json')
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
-                
-                error_response = {"error": f"Error generating script: {str(e)}"}
+                error_response = {"error": f"Invalid request data: {str(e)}"}
                 self.wfile.write(json.dumps(error_response).encode())
-        else:
-            self.send_response(404)
+                return
+
+            # Generate script based on OS
+            if request_obj.os in ["linux", "macos"]:
+                script = generate_bash_script(request_obj)
+            elif request_obj.os == "windows":
+                script = generate_powershell_script(request_obj)
+            else:
+                self.send_response(400)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                error_response = {"error": "Unsupported OS type"}
+                self.wfile.write(json.dumps(error_response).encode())
+                return
+
+            # Generate log preview
+            log_preview = generate_log_preview(request_obj)
+
+            # Send response
+            self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            
-            error_response = {"error": "Not found"}
+
+            response = GenerateScriptResponse(
+                script=script,
+                logPreview=log_preview
+            )
+            self.wfile.write(response.model_dump_json().encode())
+
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            error_response = {"error": f"Error generating script: {str(e)}"}
             self.wfile.write(json.dumps(error_response).encode())
