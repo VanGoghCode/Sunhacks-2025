@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const ConnectedNGOsSection = () => {
   const [showModal, setShowModal] = useState(false);
@@ -175,27 +176,17 @@ const ConnectedNGOsSection = () => {
                   >
                     {/* NGO Logo */}
                     <div className="w-14 h-14 mb-3 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden group hover:shadow-lg transition-all duration-300 mx-auto">
-                      <img 
+                      <Image 
                         src={`/ngos/${ngo.logo}`} 
                         alt={ngo.name}
-                        className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
-                        onLoad={(e) => {
+                        width={40}
+                        height={40}
+                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                        onLoad={() => {
                           console.log(`✅ Image loaded successfully: ${ngo.logo}`);
                         }}
-                        onError={(e) => {
+                        onError={() => {
                           console.log(`❌ Image failed to load: ${ngo.logo}`);
-                          // Fallback to initials placeholder if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `
-                              <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-forest-500 rounded-lg flex items-center justify-center">
-                                <span class="text-white font-bold text-sm">
-                                  ${ngo.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
-                                </span>
-                              </div>
-                            `;
-                          }
                         }}
                       />
                     </div>

@@ -17,10 +17,6 @@ const ContactPage = () => {
     try {
       setIsSubmitting(true);
 
-      // Get form data
-      const formData = new FormData(formRef.current);
-      const data = Object.fromEntries(formData);
-
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -44,7 +40,7 @@ const ContactPage = () => {
     {
       icon: "✉️",
       title: "Email Us",
-      description: "Send us a message and we'll respond within 24 hours.",
+      description: "Send us a message and we&apos;ll respond within 24 hours.",
       contact: "hello@loopit.com",
       action: "Send Email",
     },
@@ -95,7 +91,7 @@ const ContactPage = () => {
     {
       question: "What happens if a wipe log is incomplete or tampered with?",
       answer:
-        "Our backend verifies logs automatically. If a wipe is incomplete, the device is flagged as 'Wipe Failed' and no certificate is issued. This prevents false claims and ensures only properly wiped devices are certified.",
+        "Our backend verifies logs automatically. If a wipe is incomplete, the device is flagged as &apos;Wipe Failed&apos; and no certificate is issued. This prevents false claims and ensures only properly wiped devices are certified.",
     },
     {
       question: "How does this reduce e-waste?",
@@ -133,7 +129,7 @@ const ContactPage = () => {
           <div className="text-center">
             <h1 className="text-4xl sm:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-green-700 via-forest-600 to-green-800 bg-clip-text text-transparent">
-                Have Questions? We're Here to Help!
+                Have Questions? We&apos;re Here to Help!
               </span>
             </h1>
             <p className="text-xl text-green-800 mb-8 max-w-2xl mx-auto leading-relaxed">

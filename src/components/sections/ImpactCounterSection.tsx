@@ -2,6 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 
+const finalNumbers = {
+  laptops: 12847,
+  co2: 156.2,
+  ngos: 89,
+  kids: 25394,
+};
+
 const ImpactCounterSection = () => {
   const [counters, setCounters] = useState({
     laptops: 0,
@@ -9,13 +16,6 @@ const ImpactCounterSection = () => {
     ngos: 0,
     kids: 0,
   });
-
-  const finalNumbers = {
-    laptops: 12847,
-    co2: 156.2,
-    ngos: 89,
-    kids: 25394,
-  };
 
   useEffect(() => {
     const duration = 2000; // 2 seconds
